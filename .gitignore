@@ -1,0 +1,47 @@
+# Visual Studio files and folders
+.vs/
+.vs2019/
+.vs2022/
+# User-specific Visual Studio config files
+*.user
+*.userosscache
+*.suo
+*.cache
+*.pdb
+*.log
+
+# Build and compilation files
+bin/
+obj/
+
+# Environment-specific configuration files
+appsettings.Development.json
+appsettings.Staging.json
+
+# Rider IDE files
+.idea/
+
+# NuGet-generated files
+*.nupkg
+# Restored NuGet packages
+packages/
+
+# ASP.NET Core-generated files
+wwwroot/
+
+# Xamarin build folders
+Droid/
+iOS/
+
+# Debugging files
+*.dbmdl
+*.bak
+
+# OS-generated files
+Thumbs.db
+ehthumbs.db
+
+# IDE-specific files
+*.suo
+*.userprefs
+
