@@ -43,14 +43,14 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pbFoto = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.lblInstitución = new System.Windows.Forms.Label();
-            this.txtInstitucion = new System.Windows.Forms.TextBox();
-            this.lblTitulo = new System.Windows.Forms.Label();
-            this.txtTitulo = new System.Windows.Forms.TextBox();
-            this.dtpFADesde = new System.Windows.Forms.DateTimePicker();
-            this.dtpFAHasta = new System.Windows.Forms.DateTimePicker();
-            this.lblDesde = new System.Windows.Forms.Label();
             this.lblHasta = new System.Windows.Forms.Label();
+            this.lblDesde = new System.Windows.Forms.Label();
+            this.dtpFAHasta = new System.Windows.Forms.DateTimePicker();
+            this.dtpFADesde = new System.Windows.Forms.DateTimePicker();
+            this.txtTitulo = new System.Windows.Forms.TextBox();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.txtInstitucion = new System.Windows.Forms.TextBox();
+            this.lblInstitución = new System.Windows.Forms.Label();
             this.btnExaminar = new System.Windows.Forms.Button();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
@@ -59,27 +59,27 @@
             this.lblCargo = new System.Windows.Forms.Label();
             this.lblEntidad = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.txtCargo = new System.Windows.Forms.TextBox();
-            this.txtEntidad = new System.Windows.Forms.TextBox();
-            this.lblEPDesde = new System.Windows.Forms.Label();
-            this.lblEPHasta = new System.Windows.Forms.Label();
-            this.dtpEPDesde = new System.Windows.Forms.DateTimePicker();
             this.dtpEPHasta = new System.Windows.Forms.DateTimePicker();
+            this.dtpEPDesde = new System.Windows.Forms.DateTimePicker();
+            this.lblEPHasta = new System.Windows.Forms.Label();
+            this.lblEPDesde = new System.Windows.Forms.Label();
+            this.txtEntidad = new System.Windows.Forms.TextBox();
+            this.txtCargo = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.txtCompetencias = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.txtRLPhone = new System.Windows.Forms.TextBox();
+            this.txtRLNombre = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtRPNombre = new System.Windows.Forms.TextBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.txtRPPhone = new System.Windows.Forms.TextBox();
-            this.txtRLNombre = new System.Windows.Forms.TextBox();
-            this.txtRLPhone = new System.Windows.Forms.TextBox();
+            this.txtRPNombre = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
@@ -89,8 +89,8 @@
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            this.groupBox7.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -238,37 +238,33 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Formación Académica";
             // 
-            // lblInstitución
+            // lblHasta
             // 
-            this.lblInstitución.AutoSize = true;
-            this.lblInstitución.Location = new System.Drawing.Point(6, 32);
-            this.lblInstitución.Name = "lblInstitución";
-            this.lblInstitución.Size = new System.Drawing.Size(58, 13);
-            this.lblInstitución.TabIndex = 12;
-            this.lblInstitución.Text = "Institución:";
+            this.lblHasta.AutoSize = true;
+            this.lblHasta.Location = new System.Drawing.Point(134, 82);
+            this.lblHasta.Name = "lblHasta";
+            this.lblHasta.Size = new System.Drawing.Size(38, 13);
+            this.lblHasta.TabIndex = 19;
+            this.lblHasta.Text = "Hasta:";
             // 
-            // txtInstitucion
+            // lblDesde
             // 
-            this.txtInstitucion.Location = new System.Drawing.Point(6, 48);
-            this.txtInstitucion.Name = "txtInstitucion";
-            this.txtInstitucion.Size = new System.Drawing.Size(333, 20);
-            this.txtInstitucion.TabIndex = 13;
+            this.lblDesde.AutoSize = true;
+            this.lblDesde.Location = new System.Drawing.Point(6, 82);
+            this.lblDesde.Name = "lblDesde";
+            this.lblDesde.Size = new System.Drawing.Size(41, 13);
+            this.lblDesde.TabIndex = 18;
+            this.lblDesde.Text = "Desde:";
             // 
-            // lblTitulo
+            // dtpFAHasta
             // 
-            this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Location = new System.Drawing.Point(369, 32);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(38, 13);
-            this.lblTitulo.TabIndex = 14;
-            this.lblTitulo.Text = "Título:";
-            // 
-            // txtTitulo
-            // 
-            this.txtTitulo.Location = new System.Drawing.Point(372, 48);
-            this.txtTitulo.Name = "txtTitulo";
-            this.txtTitulo.Size = new System.Drawing.Size(284, 20);
-            this.txtTitulo.TabIndex = 15;
+            this.dtpFAHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFAHasta.Location = new System.Drawing.Point(137, 99);
+            this.dtpFAHasta.MaxDate = new System.DateTime(2024, 11, 15, 0, 0, 0, 0);
+            this.dtpFAHasta.Name = "dtpFAHasta";
+            this.dtpFAHasta.Size = new System.Drawing.Size(95, 20);
+            this.dtpFAHasta.TabIndex = 17;
+            this.dtpFAHasta.Value = new System.DateTime(2024, 11, 15, 0, 0, 0, 0);
             // 
             // dtpFADesde
             // 
@@ -281,33 +277,37 @@
             this.dtpFADesde.TabIndex = 16;
             this.dtpFADesde.Value = new System.DateTime(2024, 11, 15, 0, 0, 0, 0);
             // 
-            // dtpFAHasta
+            // txtTitulo
             // 
-            this.dtpFAHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFAHasta.Location = new System.Drawing.Point(137, 99);
-            this.dtpFAHasta.MaxDate = new System.DateTime(2024, 11, 15, 0, 0, 0, 0);
-            this.dtpFAHasta.Name = "dtpFAHasta";
-            this.dtpFAHasta.Size = new System.Drawing.Size(95, 20);
-            this.dtpFAHasta.TabIndex = 17;
-            this.dtpFAHasta.Value = new System.DateTime(2024, 11, 15, 0, 0, 0, 0);
+            this.txtTitulo.Location = new System.Drawing.Point(372, 48);
+            this.txtTitulo.Name = "txtTitulo";
+            this.txtTitulo.Size = new System.Drawing.Size(284, 20);
+            this.txtTitulo.TabIndex = 15;
             // 
-            // lblDesde
+            // lblTitulo
             // 
-            this.lblDesde.AutoSize = true;
-            this.lblDesde.Location = new System.Drawing.Point(6, 82);
-            this.lblDesde.Name = "lblDesde";
-            this.lblDesde.Size = new System.Drawing.Size(41, 13);
-            this.lblDesde.TabIndex = 18;
-            this.lblDesde.Text = "Desde:";
+            this.lblTitulo.AutoSize = true;
+            this.lblTitulo.Location = new System.Drawing.Point(369, 32);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(38, 13);
+            this.lblTitulo.TabIndex = 14;
+            this.lblTitulo.Text = "Título:";
             // 
-            // lblHasta
+            // txtInstitucion
             // 
-            this.lblHasta.AutoSize = true;
-            this.lblHasta.Location = new System.Drawing.Point(134, 82);
-            this.lblHasta.Name = "lblHasta";
-            this.lblHasta.Size = new System.Drawing.Size(38, 13);
-            this.lblHasta.TabIndex = 19;
-            this.lblHasta.Text = "Hasta:";
+            this.txtInstitucion.Location = new System.Drawing.Point(6, 48);
+            this.txtInstitucion.Name = "txtInstitucion";
+            this.txtInstitucion.Size = new System.Drawing.Size(333, 20);
+            this.txtInstitucion.TabIndex = 13;
+            // 
+            // lblInstitución
+            // 
+            this.lblInstitución.AutoSize = true;
+            this.lblInstitución.Location = new System.Drawing.Point(6, 32);
+            this.lblInstitución.Name = "lblInstitución";
+            this.lblInstitución.Size = new System.Drawing.Size(58, 13);
+            this.lblInstitución.TabIndex = 12;
+            this.lblInstitución.Text = "Institución:";
             // 
             // btnExaminar
             // 
@@ -326,6 +326,7 @@
             this.btnAgregar.TabIndex = 17;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // btnModificar
             // 
@@ -335,6 +336,7 @@
             this.btnModificar.TabIndex = 18;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // btnBorrar
             // 
@@ -344,6 +346,7 @@
             this.btnBorrar.TabIndex = 19;
             this.btnBorrar.Text = "Borrar";
             this.btnBorrar.UseVisualStyleBackColor = true;
+            this.btnBorrar.Click += new System.EventHandler(this.btnBorrar_Click);
             // 
             // btnActualizar
             // 
@@ -353,6 +356,7 @@
             this.btnActualizar.TabIndex = 20;
             this.btnActualizar.Text = "Actualizar";
             this.btnActualizar.UseVisualStyleBackColor = true;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
             // 
             // lblCargo
             // 
@@ -389,37 +393,15 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Experiencia Profesional";
             // 
-            // txtCargo
+            // dtpEPHasta
             // 
-            this.txtCargo.Location = new System.Drawing.Point(6, 49);
-            this.txtCargo.Name = "txtCargo";
-            this.txtCargo.Size = new System.Drawing.Size(333, 20);
-            this.txtCargo.TabIndex = 23;
-            // 
-            // txtEntidad
-            // 
-            this.txtEntidad.Location = new System.Drawing.Point(372, 49);
-            this.txtEntidad.Name = "txtEntidad";
-            this.txtEntidad.Size = new System.Drawing.Size(284, 20);
-            this.txtEntidad.TabIndex = 24;
-            // 
-            // lblEPDesde
-            // 
-            this.lblEPDesde.AutoSize = true;
-            this.lblEPDesde.Location = new System.Drawing.Point(6, 84);
-            this.lblEPDesde.Name = "lblEPDesde";
-            this.lblEPDesde.Size = new System.Drawing.Size(41, 13);
-            this.lblEPDesde.TabIndex = 25;
-            this.lblEPDesde.Text = "Desde:";
-            // 
-            // lblEPHasta
-            // 
-            this.lblEPHasta.AutoSize = true;
-            this.lblEPHasta.Location = new System.Drawing.Point(123, 83);
-            this.lblEPHasta.Name = "lblEPHasta";
-            this.lblEPHasta.Size = new System.Drawing.Size(38, 13);
-            this.lblEPHasta.TabIndex = 26;
-            this.lblEPHasta.Text = "Hasta:";
+            this.dtpEPHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpEPHasta.Location = new System.Drawing.Point(126, 100);
+            this.dtpEPHasta.MaxDate = new System.DateTime(2024, 11, 15, 0, 0, 0, 0);
+            this.dtpEPHasta.Name = "dtpEPHasta";
+            this.dtpEPHasta.Size = new System.Drawing.Size(95, 20);
+            this.dtpEPHasta.TabIndex = 24;
+            this.dtpEPHasta.Value = new System.DateTime(2024, 11, 15, 0, 0, 0, 0);
             // 
             // dtpEPDesde
             // 
@@ -432,15 +414,37 @@
             this.dtpEPDesde.TabIndex = 27;
             this.dtpEPDesde.Value = new System.DateTime(2024, 11, 15, 0, 0, 0, 0);
             // 
-            // dtpEPHasta
+            // lblEPHasta
             // 
-            this.dtpEPHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpEPHasta.Location = new System.Drawing.Point(126, 100);
-            this.dtpEPHasta.MaxDate = new System.DateTime(2024, 11, 15, 0, 0, 0, 0);
-            this.dtpEPHasta.Name = "dtpEPHasta";
-            this.dtpEPHasta.Size = new System.Drawing.Size(95, 20);
-            this.dtpEPHasta.TabIndex = 24;
-            this.dtpEPHasta.Value = new System.DateTime(2024, 11, 15, 0, 0, 0, 0);
+            this.lblEPHasta.AutoSize = true;
+            this.lblEPHasta.Location = new System.Drawing.Point(123, 83);
+            this.lblEPHasta.Name = "lblEPHasta";
+            this.lblEPHasta.Size = new System.Drawing.Size(38, 13);
+            this.lblEPHasta.TabIndex = 26;
+            this.lblEPHasta.Text = "Hasta:";
+            // 
+            // lblEPDesde
+            // 
+            this.lblEPDesde.AutoSize = true;
+            this.lblEPDesde.Location = new System.Drawing.Point(6, 84);
+            this.lblEPDesde.Name = "lblEPDesde";
+            this.lblEPDesde.Size = new System.Drawing.Size(41, 13);
+            this.lblEPDesde.TabIndex = 25;
+            this.lblEPDesde.Text = "Desde:";
+            // 
+            // txtEntidad
+            // 
+            this.txtEntidad.Location = new System.Drawing.Point(372, 49);
+            this.txtEntidad.Name = "txtEntidad";
+            this.txtEntidad.Size = new System.Drawing.Size(284, 20);
+            this.txtEntidad.TabIndex = 24;
+            // 
+            // txtCargo
+            // 
+            this.txtCargo.Location = new System.Drawing.Point(6, 49);
+            this.txtCargo.Name = "txtCargo";
+            this.txtCargo.Size = new System.Drawing.Size(333, 20);
+            this.txtCargo.TabIndex = 23;
             // 
             // groupBox4
             // 
@@ -452,6 +456,14 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Habilidades:";
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(6, 25);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(272, 86);
+            this.textBox1.TabIndex = 0;
+            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.txtCompetencias);
@@ -461,14 +473,6 @@
             this.groupBox5.TabIndex = 25;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Competencias:";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(6, 25);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(272, 86);
-            this.textBox1.TabIndex = 0;
             // 
             // txtCompetencias
             // 
@@ -489,19 +493,6 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Referencias";
             // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.txtRPPhone);
-            this.groupBox7.Controls.Add(this.txtRPNombre);
-            this.groupBox7.Controls.Add(this.label2);
-            this.groupBox7.Controls.Add(this.label1);
-            this.groupBox7.Location = new System.Drawing.Point(19, 41);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(293, 140);
-            this.groupBox7.TabIndex = 0;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Personal";
-            // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.txtRLPhone);
@@ -515,23 +506,19 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Laboral";
             // 
-            // label1
+            // txtRLPhone
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 32);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Nombre:";
+            this.txtRLPhone.Location = new System.Drawing.Point(27, 95);
+            this.txtRLPhone.Name = "txtRLPhone";
+            this.txtRLPhone.Size = new System.Drawing.Size(150, 20);
+            this.txtRLPhone.TabIndex = 5;
             // 
-            // label2
+            // txtRLNombre
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(18, 77);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(52, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Teléfono:";
+            this.txtRLNombre.Location = new System.Drawing.Point(24, 48);
+            this.txtRLNombre.Name = "txtRLNombre";
+            this.txtRLNombre.Size = new System.Drawing.Size(254, 20);
+            this.txtRLNombre.TabIndex = 4;
             // 
             // label3
             // 
@@ -551,12 +538,18 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "Nombre:";
             // 
-            // txtRPNombre
+            // groupBox7
             // 
-            this.txtRPNombre.Location = new System.Drawing.Point(15, 48);
-            this.txtRPNombre.Name = "txtRPNombre";
-            this.txtRPNombre.Size = new System.Drawing.Size(254, 20);
-            this.txtRPNombre.TabIndex = 2;
+            this.groupBox7.Controls.Add(this.txtRPPhone);
+            this.groupBox7.Controls.Add(this.txtRPNombre);
+            this.groupBox7.Controls.Add(this.label2);
+            this.groupBox7.Controls.Add(this.label1);
+            this.groupBox7.Location = new System.Drawing.Point(19, 41);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(293, 140);
+            this.groupBox7.TabIndex = 0;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Personal";
             // 
             // txtRPPhone
             // 
@@ -565,19 +558,30 @@
             this.txtRPPhone.Size = new System.Drawing.Size(150, 20);
             this.txtRPPhone.TabIndex = 3;
             // 
-            // txtRLNombre
+            // txtRPNombre
             // 
-            this.txtRLNombre.Location = new System.Drawing.Point(24, 48);
-            this.txtRLNombre.Name = "txtRLNombre";
-            this.txtRLNombre.Size = new System.Drawing.Size(254, 20);
-            this.txtRLNombre.TabIndex = 4;
+            this.txtRPNombre.Location = new System.Drawing.Point(15, 48);
+            this.txtRPNombre.Name = "txtRPNombre";
+            this.txtRPNombre.Size = new System.Drawing.Size(254, 20);
+            this.txtRPNombre.TabIndex = 2;
             // 
-            // txtRLPhone
+            // label2
             // 
-            this.txtRLPhone.Location = new System.Drawing.Point(27, 95);
-            this.txtRLPhone.Name = "txtRLPhone";
-            this.txtRLPhone.Size = new System.Drawing.Size(150, 20);
-            this.txtRLPhone.TabIndex = 5;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(18, 77);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(52, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Teléfono:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(18, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(47, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Nombre:";
             // 
             // btnCancelar
             // 
@@ -587,6 +591,7 @@
             this.btnCancelar.TabIndex = 27;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // dataGridView1
             // 
@@ -634,10 +639,10 @@
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
