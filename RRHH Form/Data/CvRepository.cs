@@ -5,9 +5,9 @@ using System.Data.SqlClient;
 
 public class CvRepository
 {
-    private string connectionString = "Data Source=DESKTOP-PHBGA20;Initial Catalog=CurriculumsDB;Integrated Security=True;Encrypt=False;TrustServerCertificate=True"; // Cambia esto por tu cadena de conexión real
+    private string connectionString = "Data Source=DESKTOP-PHBGA20;Initial Catalog=CurriculumsDB;Integrated Security=True;Encrypt=False;TrustServerCertificate=True"; // Change to your actual connection string
 
-    // Crear (Insertar)
+    // Create (Insert)
     public void AgregarCv(CurriculumVitae cv)
     {
         using (SqlConnection conn = new SqlConnection(connectionString))
@@ -16,39 +16,32 @@ public class CvRepository
                            "VALUES (@Nombre, @Phone, @Email, @Objetivo, @Departamento, @Titulo, @Institucion, @Desde, @Hasta, @Cargo, @Entidad, @Competencias, @RLNombre, @RLPhone, @RPNombre, @RPPhone, @Foto)";
             SqlCommand cmd = new SqlCommand(query, conn);
 
-            cmd.Parameters.AddWithValue("@Nombre", cv.Nombre);
-            cmd.Parameters.AddWithValue("@Phone", cv.Phone);
-            cmd.Parameters.AddWithValue("@Email", cv.Email);
-            cmd.Parameters.AddWithValue("@Objetivo", cv.Objetivo);
-            cmd.Parameters.AddWithValue("@Departamento", cv.Departamento);
-            cmd.Parameters.AddWithValue("@Titulo", cv.Titulo);
-            cmd.Parameters.AddWithValue("@Institucion", cv.Institucion);
-            cmd.Parameters.AddWithValue("@Desde", cv.Desde);
-            cmd.Parameters.AddWithValue("@Hasta", cv.Hasta);
-            cmd.Parameters.AddWithValue("@Cargo", cv.Cargo);
-            cmd.Parameters.AddWithValue("@Entidad", cv.Entidad);
-            cmd.Parameters.AddWithValue("@Competencias", cv.Competencias);
-            cmd.Parameters.AddWithValue("@RLNombre", cv.RLNombre);
-            cmd.Parameters.AddWithValue("@RLPhone", cv.RLPhone);
-            cmd.Parameters.AddWithValue("@RPNombre", cv.RPNombre);
-            cmd.Parameters.AddWithValue("@RPPhone", cv.RPPhone);
+            cmd.Parameters.Add("@Nombre", System.Data.SqlDbType.NVarChar).Value = cv.Nombre;
+            cmd.Parameters.Add("@Phone", System.Data.SqlDbType.NVarChar).Value = cv.Phone;
+            cmd.Parameters.Add("@Email", System.Data.SqlDbType.NVarChar).Value = cv.Email;
+            cmd.Parameters.Add("@Objetivo", System.Data.SqlDbType.NVarChar).Value = cv.Objetivo;
+            cmd.Parameters.Add("@Departamento", System.Data.SqlDbType.NVarChar).Value = cv.Departamento;
+            cmd.Parameters.Add("@Titulo", System.Data.SqlDbType.NVarChar).Value = cv.Titulo;
+            cmd.Parameters.Add("@Institucion", System.Data.SqlDbType.NVarChar).Value = cv.Institucion;
+            cmd.Parameters.Add("@Desde", System.Data.SqlDbType.Date).Value = cv.Desde;
+            cmd.Parameters.Add("@Hasta", System.Data.SqlDbType.Date).Value = cv.Hasta;
+            cmd.Parameters.Add("@Cargo", System.Data.SqlDbType.NVarChar).Value = cv.Cargo;
+            cmd.Parameters.Add("@Entidad", System.Data.SqlDbType.NVarChar).Value = cv.Entidad;
+            cmd.Parameters.Add("@Competencias", System.Data.SqlDbType.NVarChar).Value = cv.Competencias;
+            cmd.Parameters.Add("@RLNombre", System.Data.SqlDbType.NVarChar).Value = cv.RLNombre;
+            cmd.Parameters.Add("@RLPhone", System.Data.SqlDbType.NVarChar).Value = cv.RLPhone;
+            cmd.Parameters.Add("@RPNombre", System.Data.SqlDbType.NVarChar).Value = cv.RPNombre;
+            cmd.Parameters.Add("@RPPhone", System.Data.SqlDbType.NVarChar).Value = cv.RPPhone;
 
-            // Si el campo Foto es opcional, comprueba si tiene valor y asigna DBNull.Value si no lo tiene.
-            if (!string.IsNullOrEmpty(cv.Foto))
-            {
-                cmd.Parameters.AddWithValue("@Foto", cv.Foto);
-            }
-            else
-            {
-                cmd.Parameters.AddWithValue("@Foto", DBNull.Value);
-            }
+            // Handle Foto
+            cmd.Parameters.Add("@Foto", System.Data.SqlDbType.NVarChar).Value = string.IsNullOrEmpty(cv.Foto) ? (object)DBNull.Value : cv.Foto;
 
             conn.Open();
             cmd.ExecuteNonQuery();
         }
     }
 
-    // Leer (Obtener todos los registros)
+    // Read (Get all records)
     public List<CurriculumVitae> ObtenerTodosCvs()
     {
         List<CurriculumVitae> cvs = new List<CurriculumVitae>();
@@ -63,6 +56,7 @@ public class CvRepository
             {
                 cvs.Add(new CurriculumVitae
                 {
+                    Id = Convert.ToInt32(reader["Id"]),
                     Nombre = reader["Nombre"].ToString(),
                     Phone = reader["Phone"].ToString(),
                     Email = reader["Email"].ToString(),
@@ -79,64 +73,56 @@ public class CvRepository
                     RLPhone = reader["RLPhone"].ToString(),
                     RPNombre = reader["RPNombre"].ToString(),
                     RPPhone = reader["RPPhone"].ToString(),
-                    Foto = reader["Foto"] != DBNull.Value ? reader["Foto"].ToString() : null // Maneja nulos correctamente
+                    Foto = reader["Foto"] != DBNull.Value ? reader["Foto"].ToString() : null // Handle nulls correctly
                 });
             }
         }
         return cvs;
     }
 
-    // Actualizar (Modificar un registro)
+    // Update (Modify a record)
     public void ActualizarCv(CurriculumVitae cv)
     {
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
-            string query = "UPDATE Cvs SET Phone = @Phone, Email = @Email, Objetivo = @Objetivo, Departamento = @Departamento, " +
+            string query = "UPDATE Cvs SET Nombre = @Nombre, Phone = @Phone, Email = @Email, Objetivo = @Objetivo, Departamento = @Departamento, " +
                            "Titulo = @Titulo, Institucion = @Institucion, Desde = @Desde, Hasta = @Hasta, Cargo = @Cargo, Entidad = @Entidad, " +
                            "Competencias = @Competencias, RLNombre = @RLNombre, RLPhone = @RLPhone, RPNombre = @RPNombre, RPPhone = @RPPhone, Foto = @Foto " +
-                           "WHERE Nombre = @Nombre";
+                           "WHERE Id = @Id";
             SqlCommand cmd = new SqlCommand(query, conn);
 
-            cmd.Parameters.AddWithValue("@Nombre", cv.Nombre);
-            cmd.Parameters.AddWithValue("@Phone", cv.Phone);
-            cmd.Parameters.AddWithValue("@Email", cv.Email);
-            cmd.Parameters.AddWithValue("@Objetivo", cv.Objetivo);
-            cmd.Parameters.AddWithValue("@Departamento", cv.Departamento);
-            cmd.Parameters.AddWithValue("@Titulo", cv.Titulo);
-            cmd.Parameters.AddWithValue("@Institucion", cv.Institucion);
-            cmd.Parameters.AddWithValue("@Desde", cv.Desde);
-            cmd.Parameters.AddWithValue("@Hasta", cv.Hasta);
-            cmd.Parameters.AddWithValue("@Cargo", cv.Cargo);
-            cmd.Parameters.AddWithValue("@Entidad", cv.Entidad);
-            cmd.Parameters.AddWithValue("@Competencias", cv.Competencias);
-            cmd.Parameters.AddWithValue("@RLNombre", cv.RLNombre);
-            cmd.Parameters.AddWithValue("@RLPhone", cv.RLPhone);
-            cmd.Parameters.AddWithValue("@RPNombre", cv.RPNombre);
-            cmd.Parameters.AddWithValue("@RPPhone", cv.RPPhone);
-
-            // Si el campo Foto es opcional, comprueba si tiene valor y asigna DBNull.Value si no lo tiene.
-            if (!string.IsNullOrEmpty(cv.Foto))
-            {
-                cmd.Parameters.AddWithValue("@Foto", cv.Foto);
-            }
-            else
-            {
-                cmd.Parameters.AddWithValue("@Foto", DBNull.Value);
-            }
+            cmd.Parameters.Add("@Id", System.Data.SqlDbType.Int).Value = cv.Id;
+            cmd.Parameters.Add("@Nombre", System.Data.SqlDbType.NVarChar).Value = cv.Nombre;
+            cmd.Parameters.Add("@Phone", System.Data.SqlDbType.NVarChar).Value = cv.Phone;
+            cmd.Parameters.Add("@Email", System.Data.SqlDbType.NVarChar).Value = cv.Email;
+            cmd.Parameters.Add("@Objetivo", System.Data.SqlDbType.NVarChar).Value = cv.Objetivo;
+            cmd.Parameters.Add("@Departamento", System.Data.SqlDbType.NVarChar).Value = cv.Departamento;
+            cmd.Parameters.Add("@Titulo", System.Data.SqlDbType.NVarChar).Value = cv.Titulo;
+            cmd.Parameters.Add("@Institucion", System.Data.SqlDbType.NVarChar).Value = cv.Institucion;
+            cmd.Parameters.Add("@Desde", System.Data.SqlDbType.Date).Value = cv.Desde;
+            cmd.Parameters.Add("@Hasta", System.Data.SqlDbType.Date).Value = cv.Hasta;
+            cmd.Parameters.Add("@Cargo", System.Data.SqlDbType.NVarChar).Value = cv.Cargo;
+            cmd.Parameters.Add("@Entidad", System.Data.SqlDbType.NVarChar).Value = cv.Entidad;
+            cmd.Parameters.Add("@Competencias", System.Data.SqlDbType.NVarChar).Value = cv.Competencias;
+            cmd.Parameters.Add("@RLNombre", System.Data.SqlDbType.NVarChar).Value = cv.RLNombre;
+            cmd.Parameters.Add("@RLPhone", System.Data.SqlDbType.NVarChar).Value = cv.RLPhone;
+            cmd.Parameters.Add("@RPNombre", System.Data.SqlDbType.NVarChar).Value = cv.RPNombre;
+            cmd.Parameters.Add("@RPPhone", System.Data.SqlDbType.NVarChar).Value = cv.RPPhone;
+            cmd.Parameters.Add("@Foto", System.Data.SqlDbType.NVarChar).Value = string.IsNullOrEmpty(cv.Foto) ? (object)DBNull.Value : cv.Foto;
 
             conn.Open();
             cmd.ExecuteNonQuery();
         }
     }
 
-    // Eliminar (Borrar un registro)
-    public void EliminarCv(string nombre)
+    // Delete (Remove a record)
+    public void EliminarCv(int id)
     {
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
-            string query = "DELETE FROM Cvs WHERE Nombre = @Nombre";
+            string query = "DELETE FROM Cvs WHERE Id = @Id";
             SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@Nombre", nombre);
+            cmd.Parameters.Add("@Id", System.Data.SqlDbType.Int).Value = id;
 
             conn.Open();
             cmd.ExecuteNonQuery();
