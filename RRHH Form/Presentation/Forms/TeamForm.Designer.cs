@@ -35,7 +35,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(45, 41);
+            this.label1.Location = new System.Drawing.Point(25, 52);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 0;
@@ -44,12 +44,13 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(45, 74);
+            this.label2.Location = new System.Drawing.Point(25, 77);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(194, 52);
+            this.label2.Size = new System.Drawing.Size(255, 52);
             this.label2.TabIndex = 1;
-            this.label2.Text = "-Chávez Hernández, Mauricio Alejandro\r\n-Mancía Hernández, Michael Anderson\r\n-Pala" +
-    "cios Ascencio, Fernando Adrián\r\n-Salazar Martínez, Wilmer Henrry\r\n";
+            this.label2.Text = "-Chávez Hernández, Mauricio Alejandro, CH100423 \n-Mancía Hernández, Michael Ander" +
+    "son,  MH100223\n-Palacios Ascencio, Fernando Adrián,  PA100323\n-Salazar Martínez," +
+    " Wilmer Henrry, SM100223";
             // 
             // TeamForm
             // 
