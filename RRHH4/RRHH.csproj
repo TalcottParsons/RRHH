@@ -46,71 +46,71 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusquedaForm.cs">
+    <Compile Include="PresentationLayer\Forms\BusquedaForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BusquedaForm.Designer.cs">
+    <Compile Include="PresentationLayer\Forms\BusquedaForm.Designer.cs">
       <DependentUpon>BusquedaForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="RegistroUsuarioForm.cs">
+    <Compile Include="PresentationLayer\Forms\RegistroUsuarioForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RegistroUsuarioForm.Designer.cs">
+    <Compile Include="PresentationLayer\Forms\RegistroUsuarioForm.Designer.cs">
       <DependentUpon>RegistroUsuarioForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Usuario.cs" />
-    <Compile Include="Colaborador.cs" />
-    <Compile Include="FormacionAcademica.cs" />
-    <Compile Include="ExperienciaProfesional.cs" />
-    <Compile Include="Habilidad.cs" />
-    <Compile Include="Competencia.cs" />
-    <Compile Include="Referencia.cs" />
-    <Compile Include="ConexionBD.cs" />
-    <Compile Include="LoginForm.cs">
+    <Compile Include="BusinessLogicLayer\Usuario.cs" />
+    <Compile Include="BusinessLogicLayer\Colaborador.cs" />
+    <Compile Include="BusinessLogicLayer\FormacionAcademica.cs" />
+    <Compile Include="BusinessLogicLayer\ExperienciaProfesional.cs" />
+    <Compile Include="BusinessLogicLayer\Habilidad.cs" />
+    <Compile Include="BusinessLogicLayer\Competencia.cs" />
+    <Compile Include="BusinessLogicLayer\Referencia.cs" />
+    <Compile Include="DataAccessLayer\ConexionBD.cs" />
+    <Compile Include="PresentationLayer\Forms\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoginForm.Designer.cs">
+    <Compile Include="PresentationLayer\Forms\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainMenuForm.cs">
+    <Compile Include="PresentationLayer\Forms\MainMenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainMenuForm.Designer.cs">
+    <Compile Include="PresentationLayer\Forms\MainMenuForm.Designer.cs">
       <DependentUpon>MainMenuForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ColaboradoresForm.cs">
+    <Compile Include="PresentationLayer\Forms\ColaboradoresForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ColaboradoresForm.Designer.cs">
+    <Compile Include="PresentationLayer\Forms\ColaboradoresForm.Designer.cs">
       <DependentUpon>ColaboradoresForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EquipoForm.cs">
+    <Compile Include="PresentationLayer\Forms\EquipoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EquipoForm.Designer.cs">
+    <Compile Include="PresentationLayer\Forms\EquipoForm.Designer.cs">
       <DependentUpon>EquipoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="HistorialForm.cs">
+    <Compile Include="PresentationLayer\Forms\HistorialForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HistorialForm.Designer.cs">
+    <Compile Include="PresentationLayer\Forms\HistorialForm.Designer.cs">
       <DependentUpon>HistorialForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="BusquedaForm.resx">
+    <EmbeddedResource Include="PresentationLayer\Forms\BusquedaForm.resx">
       <DependentUpon>BusquedaForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ColaboradoresForm.resx">
+    <EmbeddedResource Include="PresentationLayer\Forms\ColaboradoresForm.resx">
       <DependentUpon>ColaboradoresForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HistorialForm.resx">
+    <EmbeddedResource Include="PresentationLayer\Forms\HistorialForm.resx">
       <DependentUpon>HistorialForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LoginForm.resx">
+    <EmbeddedResource Include="PresentationLayer\Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainMenuForm.resx">
+    <EmbeddedResource Include="PresentationLayer\Forms\MainMenuForm.resx">
       <DependentUpon>MainMenuForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

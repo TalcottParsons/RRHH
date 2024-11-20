@@ -55,47 +55,6 @@ namespace RRHH
             }
         }
 
-        // Método para ejecutar comandos INSERT, UPDATE, DELETE
-        public int EjecutarComando(string query, SqlParameter[] parametros = null)
-        {
-            using (SqlConnection conexion = AbrirConexion())
-            {
-                using (SqlCommand cmd = new SqlCommand(query, conexion))
-                {
-                    if (parametros != null)
-                    {
-                        cmd.Parameters.AddRange(parametros);
-                    }
-
-                    return cmd.ExecuteNonQuery(); // Retorna el número de filas afectadas
-                }
-            }
-        }
-
-        // Método para ejecutar procedimientos almacenados
-        public DataTable EjecutarProcedimiento(string nombreProcedimiento, SqlParameter[] parametros = null)
-        {
-            using (SqlConnection conexion = AbrirConexion())
-            {
-                using (SqlCommand cmd = new SqlCommand(nombreProcedimiento, conexion))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    if (parametros != null)
-                    {
-                        cmd.Parameters.AddRange(parametros);
-                    }
-
-                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                    {
-                        DataTable dt = new DataTable();
-                        da.Fill(dt);
-                        return dt;
-                    }
-                }
-            }
-        }
-
         // Método para registrar actividades en el historial
         public void RegistrarActividad(int usuarioID, string accion)
         {

@@ -53,16 +53,34 @@ namespace RRHH
             using (SqlConnection conn = new ConexionBD().AbrirConexion())
             {
                 string query = @"
-                SELECT ColaboradorID AS ID, 
-                       NombreCompleto AS Nombre, 
-                       Departamento, 
-                       Email, 
-                       Telefono, 
-                       FechaIngreso, 
-                       EstadoActivo, 
-                       Foto
-                FROM Colaboradores
-                WHERE " + criterio + " LIKE @Valor";
+            SELECT c.ColaboradorID AS ID, 
+                   c.NombreCompleto AS Nombre, 
+                   c.Departamento, 
+                   c.Email, 
+                   c.Telefono, 
+                   c.FechaIngreso, 
+                   c.EstadoActivo, 
+                   c.Foto
+            FROM Colaboradores c";
+
+                // Agregar joins según el criterio seleccionado
+                if (criterio == "Habilidad")
+                {
+                    query += @"
+                INNER JOIN Habilidades h ON c.ColaboradorID = h.ColaboradorID
+                WHERE h.Habilidad LIKE @Valor";
+                }
+                else if (criterio == "Competencia")
+                {
+                    query += @"
+                INNER JOIN Competencias comp ON c.ColaboradorID = comp.ColaboradorID
+                WHERE comp.Competencia LIKE @Valor";
+                }
+                else
+                {
+                    query += @"
+                WHERE c." + criterio + " LIKE @Valor";
+                }
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Valor", "%" + valor + "%");
@@ -73,12 +91,14 @@ namespace RRHH
 
                 dgvResultados.DataSource = dt;
 
+                // Ocultar la columna Foto en el DataGridView si existe
                 if (dgvResultados.Columns.Contains("Foto"))
                 {
-                    dgvResultados.Columns["Foto"].Visible = false; // Oculta la columna Foto en el DataGridView
+                    dgvResultados.Columns["Foto"].Visible = false;
                 }
             }
         }
+
 
         private void dgvResultados_SelectionChanged(object sender, EventArgs e)
         {

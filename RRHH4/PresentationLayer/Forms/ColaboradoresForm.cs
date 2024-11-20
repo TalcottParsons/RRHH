@@ -155,19 +155,6 @@ namespace RRHH
             }
         }
 
-        private void BtnSeleccionarFoto_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png;*.bmp";
-                openFileDialog.Title = "Seleccionar una foto";
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    pictureBoxFoto.Image = Image.FromFile(openFileDialog.FileName);
-                }
-            }
-        }
 
         private void btnSeleccionarFoto_Click(object sender, EventArgs e)
         {
