@@ -1,0 +1,14 @@
+C:\Users\lew\Desktop\RRHH2\RRHH\bin\Debug\RRHH.exe.config
+C:\Users\lew\Desktop\RRHH2\RRHH\bin\Debug\RRHH.exe
+C:\Users\lew\Desktop\RRHH2\RRHH\bin\Debug\RRHH.pdb
+C:\Users\lew\Desktop\RRHH2\RRHH\obj\Debug\RRHH.csproj.AssemblyReference.cache
+C:\Users\lew\Desktop\RRHH2\RRHH\obj\Debug\RRHH.Properties.Resources.resources
+C:\Users\lew\Desktop\RRHH2\RRHH\obj\Debug\RRHH.csproj.GenerateResource.cache
+C:\Users\lew\Desktop\RRHH2\RRHH\obj\Debug\RRHH.csproj.CoreCompileInputs.cache
+C:\Users\lew\Desktop\RRHH2\RRHH\obj\Debug\RRHH.exe
+C:\Users\lew\Desktop\RRHH2\RRHH\obj\Debug\RRHH.pdb
+C:\Users\lew\Desktop\RRHH2\RRHH\obj\Debug\RRHH.MainMenuForm.resources
+C:\Users\lew\Desktop\RRHH2\RRHH\obj\Debug\RRHH.ColaboradoresForm.resources
+C:\Users\lew\Desktop\RRHH2\RRHH\obj\Debug\RRHH.LoginForm.resources
+C:\Users\lew\Desktop\RRHH2\RRHH\obj\Debug\RRHH.HistorialForm.resources
+C:\Users\lew\Desktop\RRHH2\RRHH\obj\Debug\RRHH.BusquedaForm.resources
