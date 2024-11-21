@@ -1,0 +1,99 @@
+-- Crear la base de datos RRHH
+CREATE DATABASE RRHH;
+GO
+
+-- Usar la base de datos recién creada
+USE RRHH;
+GO
+
+-- Tabla de Usuarios (para autenticación y roles)
+CREATE TABLE Usuarios (
+    UsuarioID INT IDENTITY(1,1) PRIMARY KEY,
+    NombreUsuario NVARCHAR(50) NOT NULL UNIQUE,
+    Contraseña NVARCHAR(255) NOT NULL,
+    Rol NVARCHAR(20) NOT NULL CHECK (Rol IN ('Admin', 'Operador')),
+    FechaCreacion DATETIME DEFAULT GETDATE()
+);
+GO
+
+-- Tabla de Colaboradores
+CREATE TABLE Colaboradores (
+    ColaboradorID INT IDENTITY(1,1) PRIMARY KEY,
+    NombreCompleto NVARCHAR(100) NOT NULL,
+    Telefono NVARCHAR(15) NOT NULL,
+    Email NVARCHAR(100) NOT NULL,
+    Departamento NVARCHAR(50) NOT NULL,
+    Objetivo NVARCHAR(MAX),
+    Foto VARBINARY(MAX), -- Para almacenar fotos
+    EstadoActivo BIT DEFAULT 1, -- 1: Activo, 0: Inactivo
+    FechaIngreso DATETIME DEFAULT GETDATE(),
+    Puesto NVARCHAR(100) NOT NULL -- Nuevo campo para el puesto del colaborador
+);
+GO
+
+-- Tabla de Formación Académica
+CREATE TABLE FormacionAcademica (
+    FormacionID INT IDENTITY(1,1) PRIMARY KEY,
+    ColaboradorID INT NOT NULL,
+    Institucion NVARCHAR(100) NOT NULL,
+    Titulo NVARCHAR(100) NOT NULL,
+    AñoInicio INT NOT NULL,
+    AñoFin INT NOT NULL,
+    FOREIGN KEY (ColaboradorID) REFERENCES Colaboradores(ColaboradorID) ON DELETE CASCADE
+);
+GO
+
+-- Tabla de Experiencia Profesional
+CREATE TABLE ExperienciaProfesional (
+    ExperienciaID INT IDENTITY(1,1) PRIMARY KEY,
+    ColaboradorID INT NOT NULL,
+    Empresa NVARCHAR(100) NOT NULL,
+    Puesto NVARCHAR(100) NOT NULL,
+    AñoInicio INT NOT NULL,
+    AñoFin INT NOT NULL,
+    FOREIGN KEY (ColaboradorID) REFERENCES Colaboradores(ColaboradorID) ON DELETE CASCADE
+);
+GO
+
+-- Tabla de Habilidades
+CREATE TABLE Habilidades (
+    HabilidadID INT IDENTITY(1,1) PRIMARY KEY,
+    ColaboradorID INT NOT NULL,
+    Habilidad NVARCHAR(100) NOT NULL,
+    FOREIGN KEY (ColaboradorID) REFERENCES Colaboradores(ColaboradorID) ON DELETE CASCADE
+);
+GO
+
+-- Tabla de Competencias
+CREATE TABLE Competencias (
+    CompetenciaID INT IDENTITY(1,1) PRIMARY KEY,
+    ColaboradorID INT NOT NULL,
+    Competencia NVARCHAR(100) NOT NULL,
+    Dominio NVARCHAR(50) NOT NULL,
+    FOREIGN KEY (ColaboradorID) REFERENCES Colaboradores(ColaboradorID) ON DELETE CASCADE
+);
+GO
+
+-- Tabla de Referencias
+CREATE TABLE Referencias (
+    ReferenciaID INT IDENTITY(1,1) PRIMARY KEY,
+    ColaboradorID INT NOT NULL,
+    TipoReferencia NVARCHAR(20) NOT NULL CHECK (TipoReferencia IN ('Personal', 'Laboral')),
+    Nombre NVARCHAR(100) NOT NULL,
+    Telefono NVARCHAR(15) NOT NULL,
+    FOREIGN KEY (ColaboradorID) REFERENCES Colaboradores(ColaboradorID) ON DELETE CASCADE
+);
+GO
+
+-- Tabla de Historial de Actividades
+CREATE TABLE HistorialActividades (
+    ActividadID INT IDENTITY(1,1) PRIMARY KEY,
+    UsuarioID INT NOT NULL,
+    Accion NVARCHAR(255) NOT NULL,
+    FechaActividad DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (UsuarioID) REFERENCES Usuarios(UsuarioID)
+);
+GO
+
+-- Confirmación
+PRINT 'Base de datos y tablas creadas exitosamente.';
