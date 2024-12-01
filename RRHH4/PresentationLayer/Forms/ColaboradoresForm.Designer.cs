@@ -91,6 +91,13 @@ namespace RRHH
             this.btnEliminarReferencia = new System.Windows.Forms.Button();
             this.dgvReferencias = new System.Windows.Forms.DataGridView();
             this.btnRegresar = new System.Windows.Forms.Button();
+            this.dgvColaboradores.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvColaboradores_CellClick);
+            this.dgvFormacionAcademica.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFormacionAcademica_CellClick);
+            this.dgvExperienciaProfesional.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExperienciaProfesional_CellClick);
+            this.dgvHabilidades.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHabilidades_CellClick);
+            this.dgvCompetencias.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCompetencias_CellClick);
+            this.dgvReferencias.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvReferencias_CellClick);
+            this.dgvColaboradores.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvColaboradores_CellClick);
             this.tabControl.SuspendLayout();
             this.tabDatosBasicos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFoto)).BeginInit();

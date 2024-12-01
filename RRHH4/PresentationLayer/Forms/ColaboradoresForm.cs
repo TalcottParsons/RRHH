@@ -44,6 +44,149 @@ namespace RRHH
             }
         }
 
+        // Evento que se dispara al hacer clic en una celda del DataGridView de colaboradores.
+        // Carga los datos del colaborador seleccionado en los campos correspondientes del formulario.
+        private void dgvColaboradores_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                // Verificar que no se haga clic en una fila vacía
+                if (e.RowIndex >= 0 && dgvColaboradores.Rows[e.RowIndex].Cells["ColaboradorID"].Value != null)
+                {
+                    // Obtener los valores de la fila seleccionada
+                    DataGridViewRow filaSeleccionada = dgvColaboradores.Rows[e.RowIndex];
+
+                    txtNombreCompleto.Text = filaSeleccionada.Cells["NombreCompleto"].Value.ToString();
+                    txtTelefono.Text = filaSeleccionada.Cells["Telefono"].Value.ToString();
+                    txtEmail.Text = filaSeleccionada.Cells["Email"].Value.ToString();
+                    txtDepartamento.Text = filaSeleccionada.Cells["Departamento"].Value.ToString();
+                    txtObjetivo.Text = filaSeleccionada.Cells["Objetivo"].Value.ToString();
+
+                    // Omitimos la lógica de la foto, ya que no es necesaria
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los datos del colaborador: " + ex.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Evento que se dispara al hacer clic en una celda del DataGridView de formación académica.
+        // Carga los datos de la formación seleccionada en los campos correspondientes del formulario:
+        // Institución, Título, Año de inicio y Año de fin.
+        private void dgvFormacionAcademica_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0 && dgvFormacionAcademica.Rows[e.RowIndex].Cells["FormacionID"].Value != null)
+                {
+                    DataGridViewRow filaSeleccionada = dgvFormacionAcademica.Rows[e.RowIndex];
+
+                    txtInstitucion.Text = filaSeleccionada.Cells["Institucion"].Value.ToString();
+                    txtTitulo.Text = filaSeleccionada.Cells["Titulo"].Value.ToString();
+                    numAñoInicio.Value = Convert.ToDecimal(filaSeleccionada.Cells["AñoInicio"].Value);
+                    numAñoFin.Value = Convert.ToDecimal(filaSeleccionada.Cells["AñoFin"].Value);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los datos de formación académica: " + ex.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Evento que se dispara al hacer clic en una celda del DataGridView de experiencia profesional.
+        // Carga los datos de la experiencia seleccionada en los campos correspondientes del formulario:
+        // Empresa, Puesto, Año de inicio y Año de fin.
+        private void dgvExperienciaProfesional_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0 && dgvExperienciaProfesional.Rows[e.RowIndex].Cells["ExperienciaID"].Value != null)
+                {
+                    DataGridViewRow filaSeleccionada = dgvExperienciaProfesional.Rows[e.RowIndex];
+
+                    txtEmpresa.Text = filaSeleccionada.Cells["Empresa"].Value.ToString();
+                    txtPuesto.Text = filaSeleccionada.Cells["Puesto"].Value.ToString();
+                    numAñoInicioExperiencia.Value = Convert.ToDecimal(filaSeleccionada.Cells["AñoInicio"].Value);
+                    numAñoFinExperiencia.Value = Convert.ToDecimal(filaSeleccionada.Cells["AñoFin"].Value);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los datos de experiencia profesional: " + ex.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Evento que se dispara al hacer clic en una celda del DataGridView de habilidades.
+        // Carga el nombre de la habilidad seleccionada en el campo correspondiente del formulario.
+        private void dgvHabilidades_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0 && dgvHabilidades.Rows[e.RowIndex].Cells["HabilidadID"].Value != null)
+                {
+                    DataGridViewRow filaSeleccionada = dgvHabilidades.Rows[e.RowIndex];
+
+                    txtHabilidad.Text = filaSeleccionada.Cells["Habilidad"].Value.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los datos de habilidades: " + ex.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Evento que se dispara al hacer clic en una celda del DataGridView de competencias.
+        // Carga los datos de la competencia seleccionada en los campos correspondientes del formulario:
+        // Competencia y Nivel de dominio.
+        private void dgvCompetencias_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0 && dgvCompetencias.Rows[e.RowIndex].Cells["CompetenciaID"].Value != null)
+                {
+                    DataGridViewRow filaSeleccionada = dgvCompetencias.Rows[e.RowIndex];
+
+                    txtCompetencia.Text = filaSeleccionada.Cells["Competencia"].Value.ToString();
+                    cmbDominio.SelectedItem = filaSeleccionada.Cells["Dominio"].Value.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los datos de competencias: " + ex.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Evento que se dispara al hacer clic en una celda del DataGridView de referencias.
+        // Carga los datos de la referencia seleccionada en los campos correspondientes del formulario:
+        // Tipo de referencia, Nombre y Teléfono.
+        private void dgvReferencias_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0 && dgvReferencias.Rows[e.RowIndex].Cells["ReferenciaID"].Value != null)
+                {
+                    DataGridViewRow filaSeleccionada = dgvReferencias.Rows[e.RowIndex];
+
+                    cmbTipoReferencia.SelectedItem = filaSeleccionada.Cells["TipoReferencia"].Value.ToString();
+                    txtNombreReferencia.Text = filaSeleccionada.Cells["Nombre"].Value.ToString();
+                    txtTelefonoReferencia.Text = filaSeleccionada.Cells["Telefono"].Value.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los datos de referencias: " + ex.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+
         private void btnBuscarColaborador_Click(object sender, EventArgs e)
         {
             try
@@ -300,7 +443,8 @@ namespace RRHH
 
                 using (SqlConnection conexion = new ConexionBD().AbrirConexion())
                 {
-                    string query = "SELECT Institucion, Titulo, AñoInicio, AñoFin FROM FormacionAcademica WHERE ColaboradorID = @ColaboradorID";
+                    string query = "SELECT FormacionID, Institucion, Titulo, AñoInicio, AñoFin " +
+                                   "FROM FormacionAcademica WHERE ColaboradorID = @ColaboradorID";
                     SqlCommand cmd = new SqlCommand(query, conexion);
                     cmd.Parameters.AddWithValue("@ColaboradorID", colaboradorID);
 
@@ -315,6 +459,7 @@ namespace RRHH
                 dgvFormacionAcademica.DataSource = null;
             }
         }
+
 
         private void btnAgregarFormacion_Click(object sender, EventArgs e)
         {
@@ -398,7 +543,8 @@ namespace RRHH
 
                 using (SqlConnection conexion = new ConexionBD().AbrirConexion())
                 {
-                    string query = "SELECT Empresa, Puesto, AñoInicio, AñoFin FROM ExperienciaProfesional WHERE ColaboradorID = @ColaboradorID";
+                    string query = "SELECT ExperienciaID, Empresa, Puesto, AñoInicio, AñoFin " +
+                                   "FROM ExperienciaProfesional WHERE ColaboradorID = @ColaboradorID";
                     SqlCommand cmd = new SqlCommand(query, conexion);
                     cmd.Parameters.AddWithValue("@ColaboradorID", colaboradorID);
 
@@ -413,6 +559,7 @@ namespace RRHH
                 dgvExperienciaProfesional.DataSource = null;
             }
         }
+
 
         private void btnAgregarExperiencia_Click(object sender, EventArgs e)
         {
