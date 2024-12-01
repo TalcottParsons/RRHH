@@ -461,34 +461,60 @@ namespace RRHH
         }
 
 
+        private bool ExisteFormacionAcademica(string institucion, string titulo, int anioInicio, int anioFin)
+        {
+            foreach (DataGridViewRow fila in dgvFormacionAcademica.Rows)
+            {
+                if (fila.Cells["Institucion"].Value.ToString() == institucion &&
+                    fila.Cells["Titulo"].Value.ToString() == titulo &&
+                    Convert.ToInt32(fila.Cells["AñoInicio"].Value) == anioInicio &&
+                    Convert.ToInt32(fila.Cells["AñoFin"].Value) == anioFin)
+                {
+                    return true; // La formación académica ya existe
+                }
+            }
+            return false; // No existe
+        }
+
+        // Código para agregar la formación académica
         private void btnAgregarFormacion_Click(object sender, EventArgs e)
+        {
+            string institucion = txtInstitucion.Text.Trim();
+            string titulo = txtTitulo.Text.Trim();
+            int anioInicio = (int)numAñoInicio.Value;
+            int anioFin = (int)numAñoFin.Value;
+
+            if (ExisteFormacionAcademica(institucion, titulo, anioInicio, anioFin))
+            {
+                MessageBox.Show("Ya existe una formación académica con los mismos datos.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+   
+            using (SqlConnection conexion = new ConexionBD().AbrirConexion())
+            {
+                string query = "INSERT INTO FormacionAcademica (Institucion, Titulo, AñoInicio, AñoFin, ColaboradorID) " +
+                               "VALUES (@Institucion, @Titulo, @AñoInicio, @AñoFin, @ColaboradorID)";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@Institucion", institucion);
+                comando.Parameters.AddWithValue("@Titulo", titulo);
+                comando.Parameters.AddWithValue("@AñoInicio", anioInicio);
+                comando.Parameters.AddWithValue("@AñoFin", anioFin);
+                comando.Parameters.AddWithValue("@ColaboradorID", ObtenerColaboradorSeleccionadoID());
+                comando.ExecuteNonQuery();
+            }
+
+            MessageBox.Show("Formación académica agregada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            CargarFormaciones();
+        }
+
+        private int ObtenerColaboradorSeleccionadoID()
         {
             if (dgvColaboradores.SelectedRows.Count > 0)
             {
-                try
-                {
-                    FormacionAcademica formacion = new FormacionAcademica
-                    {
-                        ColaboradorID = Convert.ToInt32(dgvColaboradores.SelectedRows[0].Cells["ColaboradorID"].Value),
-                        Institucion = txtInstitucion.Text.Trim(),
-                        Titulo = txtTitulo.Text.Trim(),
-                        AñoInicio = (int)numAñoInicio.Value,
-                        AñoFin = (int)numAñoFin.Value
-                    };
-
-                    formacion.AgregarFormacion();
-                    MessageBox.Show("Formación académica agregada exitosamente.");
-                    CargarFormaciones();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al agregar la formación académica: " + ex.Message);
-                }
+                return Convert.ToInt32(dgvColaboradores.SelectedRows[0].Cells["ColaboradorID"].Value);
             }
-            else
-            {
-                MessageBox.Show("Por favor, selecciona un colaborador antes de agregar formación académica.");
-            }
+            throw new InvalidOperationException("No hay un colaborador seleccionado.");
         }
 
 
@@ -652,28 +678,52 @@ namespace RRHH
         }
 
 
+        private bool ExisteExperienciaProfesional(string empresa, string puesto, int anioInicio, int anioFin)
+        {
+            foreach (DataGridViewRow fila in dgvExperienciaProfesional.Rows)
+            {
+                if (fila.Cells["Empresa"].Value.ToString() == empresa &&
+                    fila.Cells["Puesto"].Value.ToString() == puesto &&
+                    Convert.ToInt32(fila.Cells["AñoInicio"].Value) == anioInicio &&
+                    Convert.ToInt32(fila.Cells["AñoFin"].Value) == anioFin)
+                {
+                    return true; // La experiencia profesional ya existe
+                }
+            }
+            return false; // No existe
+        }
+
         private void btnAgregarExperiencia_Click(object sender, EventArgs e)
         {
-            try
-            {
-                ExperienciaProfesional experiencia = new ExperienciaProfesional
-                {
-                    ColaboradorID = Convert.ToInt32(dgvColaboradores.SelectedRows[0].Cells["ColaboradorID"].Value),
-                    Empresa = txtEmpresa.Text.Trim(),
-                    Puesto = txtPuesto.Text.Trim(),
-                    AñoInicio = (int)numAñoInicioExperiencia.Value,
-                    AñoFin = (int)numAñoFinExperiencia.Value
-                };
+            string empresa = txtEmpresa.Text.Trim();
+            string puesto = txtPuesto.Text.Trim();
+            int anioInicio = (int)numAñoInicioExperiencia.Value;
+            int anioFin = (int)numAñoFinExperiencia.Value;
 
-                experiencia.AgregarExperiencia();
-                MessageBox.Show("Experiencia agregada exitosamente.");
-                CargarExperiencias();
-            }
-            catch (Exception ex)
+            if (ExisteExperienciaProfesional(empresa, puesto, anioInicio, anioFin))
             {
-                MessageBox.Show("Error: " + ex.Message);
+                MessageBox.Show("Ya existe una experiencia profesional con los mismos datos.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            // Código para agregar la experiencia profesional
+            using (SqlConnection conexion = new ConexionBD().AbrirConexion())
+            {
+                string query = "INSERT INTO ExperienciaProfesional (Empresa, Puesto, AñoInicio, AñoFin, ColaboradorID) " +
+                               "VALUES (@Empresa, @Puesto, @AñoInicio, @AñoFin, @ColaboradorID)";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@Empresa", empresa);
+                comando.Parameters.AddWithValue("@Puesto", puesto);
+                comando.Parameters.AddWithValue("@AñoInicio", anioInicio);
+                comando.Parameters.AddWithValue("@AñoFin", anioFin);
+                comando.Parameters.AddWithValue("@ColaboradorID", ObtenerColaboradorSeleccionadoID());
+                comando.ExecuteNonQuery();
+            }
+
+            MessageBox.Show("Experiencia profesional agregada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            CargarExperiencias();
         }
+
 
         private void btnActualizarExperiencia_Click(object sender, EventArgs e)
         {
@@ -731,32 +781,42 @@ namespace RRHH
             }
         }
 
+        private bool ExisteHabilidad(string habilidad)
+        {
+            foreach (DataGridViewRow fila in dgvHabilidades.Rows)
+            {
+                if (fila.Cells["Habilidad"].Value.ToString() == habilidad)
+                {
+                    return true; // La habilidad ya existe
+                }
+            }
+            return false; // No existe
+        }
+
         private void btnAgregarHabilidad_Click(object sender, EventArgs e)
         {
-            if (dgvColaboradores.SelectedRows.Count > 0)
-            {
-                try
-                {
-                    Habilidad habilidad = new Habilidad
-                    {
-                        ColaboradorID = Convert.ToInt32(dgvColaboradores.SelectedRows[0].Cells["ColaboradorID"].Value),
-                        HabilidadNombre = txtHabilidad.Text.Trim()
-                    };
+            string habilidad = txtHabilidad.Text.Trim();
 
-                    habilidad.AgregarHabilidad();
-                    MessageBox.Show("Habilidad agregada exitosamente.");
-                    CargarHabilidades();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al agregar habilidad: " + ex.Message);
-                }
-            }
-            else
+            if (ExisteHabilidad(habilidad))
             {
-                MessageBox.Show("Seleccione un colaborador antes de agregar una habilidad.");
+                MessageBox.Show("Ya existe una habilidad con los mismos datos.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            // Código para agregar la habilidad
+            using (SqlConnection conexion = new ConexionBD().AbrirConexion())
+            {
+                string query = "INSERT INTO Habilidades (Habilidad, ColaboradorID) VALUES (@Habilidad, @ColaboradorID)";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@Habilidad", habilidad);
+                comando.Parameters.AddWithValue("@ColaboradorID", ObtenerColaboradorSeleccionadoID());
+                comando.ExecuteNonQuery();
+            }
+
+            MessageBox.Show("Habilidad agregada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            CargarHabilidades();
         }
+
 
         private void btnActualizarHabilidad_Click(object sender, EventArgs e)
         {
@@ -820,33 +880,53 @@ namespace RRHH
             }
         }
 
+        private bool ExisteCompetencia(string competencia, string dominio)
+        {
+            foreach (DataGridViewRow fila in dgvCompetencias.Rows)
+            {
+                if (fila.Cells["Competencia"].Value.ToString() == competencia &&
+                    fila.Cells["Dominio"].Value.ToString() == dominio)
+                {
+                    return true; // La competencia ya existe
+                }
+            }
+            return false; // No existe
+        }
+
         private void btnAgregarCompetencia_Click(object sender, EventArgs e)
         {
-            if (dgvColaboradores.SelectedRows.Count > 0)
-            {
-                try
-                {
-                    Competencia competencia = new Competencia
-                    {
-                        ColaboradorID = Convert.ToInt32(dgvColaboradores.SelectedRows[0].Cells["ColaboradorID"].Value),
-                        CompetenciaNombre = txtCompetencia.Text.Trim(),
-                        Dominio = cmbDominio.SelectedItem.ToString()
-                    };
+            string competencia = txtCompetencia.Text.Trim();
+            string dominio = cmbDominio.SelectedItem?.ToString();
 
-                    competencia.AgregarCompetencia();
-                    MessageBox.Show("Competencia agregada exitosamente.");
-                    CargarCompetencias();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al agregar la competencia: " + ex.Message);
-                }
-            }
-            else
+            if (string.IsNullOrEmpty(competencia) || string.IsNullOrEmpty(dominio))
             {
-                MessageBox.Show("Seleccione un colaborador antes de agregar una competencia.");
+                MessageBox.Show("Por favor, complete todos los campos antes de agregar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            if (ExisteCompetencia(competencia, dominio))
+            {
+                MessageBox.Show("Ya existe una competencia con los mismos datos.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Código para agregar la competencia
+            using (SqlConnection conexion = new ConexionBD().AbrirConexion())
+            {
+                string query = "INSERT INTO Competencias (Competencia, Dominio, ColaboradorID) " +
+                               "VALUES (@Competencia, @Dominio, @ColaboradorID)";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@Competencia", competencia);
+                comando.Parameters.AddWithValue("@Dominio", dominio);
+                comando.Parameters.AddWithValue("@ColaboradorID", ObtenerColaboradorSeleccionadoID());
+                comando.ExecuteNonQuery();
+            }
+
+            MessageBox.Show("Competencia agregada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            CargarCompetencias();
         }
+
+
 
         private void btnActualizarCompetencia_Click(object sender, EventArgs e)
         {
@@ -902,34 +982,55 @@ namespace RRHH
             }
         }
 
+        private bool ExisteReferencia(string tipoReferencia, string nombre, string telefono)
+        {
+            foreach (DataGridViewRow fila in dgvReferencias.Rows)
+            {
+                if (fila.Cells["TipoReferencia"].Value.ToString() == tipoReferencia &&
+                    fila.Cells["Nombre"].Value.ToString() == nombre &&
+                    fila.Cells["Telefono"].Value.ToString() == telefono)
+                {
+                    return true; // La referencia ya existe
+                }
+            }
+            return false; // No existe
+        }
+
         private void btnAgregarReferencia_Click(object sender, EventArgs e)
         {
-            if (dgvColaboradores.SelectedRows.Count > 0)
-            {
-                try
-                {
-                    Referencia referencia = new Referencia
-                    {
-                        ColaboradorID = Convert.ToInt32(dgvColaboradores.SelectedRows[0].Cells["ColaboradorID"].Value),
-                        TipoReferencia = cmbTipoReferencia.SelectedItem.ToString(),
-                        Nombre = txtNombreReferencia.Text.Trim(),
-                        Telefono = txtTelefonoReferencia.Text.Trim()
-                    };
+            string tipoReferencia = cmbTipoReferencia.SelectedItem?.ToString();
+            string nombre = txtNombreReferencia.Text.Trim();
+            string telefono = txtTelefonoReferencia.Text.Trim();
 
-                    referencia.AgregarReferencia();
-                    MessageBox.Show("Referencia agregada exitosamente.");
-                    CargarReferencias();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al agregar la referencia: " + ex.Message);
-                }
-            }
-            else
+            if (string.IsNullOrEmpty(tipoReferencia) || string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(telefono))
             {
-                MessageBox.Show("Por favor, selecciona un colaborador antes de agregar una referencia.");
+                MessageBox.Show("Por favor, complete todos los campos antes de agregar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            if (ExisteReferencia(tipoReferencia, nombre, telefono))
+            {
+                MessageBox.Show("Ya existe una referencia con los mismos datos.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Código para agregar la referencia
+            using (SqlConnection conexion = new ConexionBD().AbrirConexion())
+            {
+                string query = "INSERT INTO Referencias (TipoReferencia, Nombre, Telefono, ColaboradorID) " +
+                               "VALUES (@TipoReferencia, @Nombre, @Telefono, @ColaboradorID)";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@TipoReferencia", tipoReferencia);
+                comando.Parameters.AddWithValue("@Nombre", nombre);
+                comando.Parameters.AddWithValue("@Telefono", telefono);
+                comando.Parameters.AddWithValue("@ColaboradorID", ObtenerColaboradorSeleccionadoID());
+                comando.ExecuteNonQuery();
+            }
+
+            MessageBox.Show("Referencia agregada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            CargarReferencias();
         }
+
 
         private void btnActualizarReferencia_Click(object sender, EventArgs e)
         {
