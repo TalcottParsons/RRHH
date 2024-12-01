@@ -75,6 +75,22 @@ namespace RRHH
             }
         }
 
-       
+        // Método para verificar si un colaborador ya existe en la base de datos
+        public bool ExisteColaborador(string nombreCompleto, string email)
+        {
+            using (SqlConnection conexion = new ConexionBD().AbrirConexion())
+            {
+                string query = "SELECT COUNT(*) FROM Colaboradores WHERE NombreCompleto = @NombreCompleto OR Email = @Email";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@NombreCompleto", nombreCompleto);
+                comando.Parameters.AddWithValue("@Email", email);
+
+                int count = (int)comando.ExecuteScalar(); // Obtiene el número de coincidencias
+                return count > 0; // Devuelve true si existe un colaborador con el mismo nombre o correo
+            }
+        }
+
+
+
     }
 }

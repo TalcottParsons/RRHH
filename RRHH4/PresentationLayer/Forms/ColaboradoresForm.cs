@@ -50,17 +50,33 @@ namespace RRHH
         {
             try
             {
-                Colaborador colaborador = new Colaborador
+                // Validación de campos vacíos
+                if (string.IsNullOrWhiteSpace(txtNombreCompleto.Text) ||
+                    string.IsNullOrWhiteSpace(txtEmail.Text))
                 {
-                    NombreCompleto = txtNombreCompleto.Text.Trim(),
-                    Telefono = txtTelefono.Text.Trim(),
-                    Email = txtEmail.Text.Trim(),
-                    Departamento = txtDepartamento.Text.Trim(),
-                    Objetivo = txtObjetivo.Text.Trim(),
-                    EstadoActivo = true,
-                };
+                    MessageBox.Show("Por favor, complete los campos obligatorios (Nombre Completo y Email).",
+                                    "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-                // Convierte la imagen en el PictureBox a un arreglo de bytes
+                // Verificar si el colaborador ya existe
+                Colaborador colaborador = new Colaborador();
+                if (colaborador.ExisteColaborador(txtNombreCompleto.Text.Trim(), txtEmail.Text.Trim()))
+                {
+                    MessageBox.Show("Ya existe un colaborador con este nombre o correo electrónico.",
+                                    "Duplicado detectado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Crear el nuevo colaborador
+                colaborador.NombreCompleto = txtNombreCompleto.Text.Trim();
+                colaborador.Telefono = txtTelefono.Text.Trim();
+                colaborador.Email = txtEmail.Text.Trim();
+                colaborador.Departamento = txtDepartamento.Text.Trim();
+                colaborador.Objetivo = txtObjetivo.Text.Trim();
+                colaborador.EstadoActivo = true;
+
+                // Convertir la imagen en el PictureBox a un arreglo de bytes
                 if (pictureBoxFoto.Image != null)
                 {
                     using (MemoryStream ms = new MemoryStream())
@@ -70,14 +86,39 @@ namespace RRHH
                     }
                 }
 
+                // Agregar el colaborador
                 colaborador.AgregarColaborador();
-                MessageBox.Show("Colaborador agregado exitosamente.");
+                MessageBox.Show("Colaborador agregado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Recargar la lista de colaboradores
                 CargarColaboradores();
+
+                // Limpiar los campos del formulario
                 LimpiarCampos();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Método para limpiar los campos del formulario
+        private void LimpiarCampos()
+        {
+            // Limpia los campos de entrada
+            txtNombreCompleto.Clear();
+            txtTelefono.Clear();
+            txtEmail.Clear();
+            txtDepartamento.Clear();
+            txtObjetivo.Clear();
+
+            // Limpia la imagen en el PictureBox
+            pictureBoxFoto.Image = null;
+
+            // Deselecciona cualquier fila en el DataGridView
+            if (dgvColaboradores.SelectedRows.Count > 0)
+            {
+                dgvColaboradores.ClearSelection();
             }
         }
 
@@ -716,12 +757,6 @@ namespace RRHH
         }
 
         // Método para limpiar los campos
-        private void LimpiarCampos()
-        {
-            txtNombreCompleto.Clear();
-            txtTelefono.Clear();
-            txtEmail.Clear();
-            txtDepartamento.Clear();
-        }
+       
     }
 }
