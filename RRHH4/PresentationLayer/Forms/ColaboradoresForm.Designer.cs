@@ -92,6 +92,7 @@ namespace RRHH
             this.btnEliminarReferencia = new System.Windows.Forms.Button();
             this.dgvReferencias = new System.Windows.Forms.DataGridView();
             this.btnRegresar = new System.Windows.Forms.Button();
+            this.dgvColaboradores.SelectionChanged += new System.EventHandler(this.dgvColaboradores_SelectionChanged_Reset);
             this.tabControl.SuspendLayout();
             this.tabDatosBasicos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFoto)).BeginInit();

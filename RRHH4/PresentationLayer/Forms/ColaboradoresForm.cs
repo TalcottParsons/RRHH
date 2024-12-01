@@ -580,7 +580,49 @@ namespace RRHH
             dgvCompetencias.DataSource = null;
             dgvReferencias.DataSource = null;
         }
+        //Resetea el DataGridView cada que se cambia de colaborador
+        private void dgvColaboradores_SelectionChanged_Reset(object sender, EventArgs e)
+        {
+            // Limpiar todos los campos y DataGridView relacionados al cambiar de colaborador
+            LimpiarPestañas();
+        }
 
+        private void LimpiarPestañas()
+        {
+            // Limpiar los campos de la pestaña Formación Académica
+            txtInstitucion.Clear();
+            txtTitulo.Clear();
+            numAñoInicio.Value = numAñoInicio.Minimum;
+            numAñoFin.Value = numAñoFin.Minimum;
+            dgvFormacionAcademica.ClearSelection();
+            dgvFormacionAcademica.DataSource = null;
+
+            // Limpiar los campos de la pestaña Experiencia Profesional
+            txtEmpresa.Clear();
+            txtPuesto.Clear();
+            numAñoInicioExperiencia.Value = numAñoInicioExperiencia.Minimum;
+            numAñoFinExperiencia.Value = numAñoFinExperiencia.Minimum;
+            dgvExperienciaProfesional.ClearSelection();
+            dgvExperienciaProfesional.DataSource = null;
+
+            // Limpiar los campos de la pestaña Habilidades
+            txtHabilidad.Clear();
+            dgvHabilidades.ClearSelection();
+            dgvHabilidades.DataSource = null;
+
+            // Limpiar los campos de la pestaña Competencias
+            txtCompetencia.Clear();
+            cmbDominio.SelectedIndex = -1;
+            dgvCompetencias.ClearSelection();
+            dgvCompetencias.DataSource = null;
+
+            // Limpiar los campos de la pestaña Referencias
+            cmbTipoReferencia.SelectedIndex = -1;
+            txtNombreReferencia.Clear();
+            txtTelefonoReferencia.Clear();
+            dgvReferencias.ClearSelection();
+            dgvReferencias.DataSource = null;
+        }
 
 
         // Método para cargar experiencia profesional
