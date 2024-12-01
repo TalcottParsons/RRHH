@@ -534,6 +534,55 @@ namespace RRHH
             }
         }
 
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            // Limpiar los campos de texto en la pestaña Datos Básicos
+            txtNombreCompleto.Clear();
+            txtTelefono.Clear();
+            txtEmail.Clear();
+            txtDepartamento.Clear();
+            txtObjetivo.Clear();
+            pictureBoxFoto.Image = null;
+
+            // Limpiar los campos en Formación Académica
+            txtInstitucion.Clear();
+            txtTitulo.Clear();
+            numAñoInicio.Value = numAñoInicio.Minimum;
+            numAñoFin.Value = numAñoFin.Minimum;
+
+            // Limpiar los campos en Experiencia Profesional
+            txtEmpresa.Clear();
+            txtPuesto.Clear();
+            numAñoInicioExperiencia.Value = numAñoInicioExperiencia.Minimum;
+            numAñoFinExperiencia.Value = numAñoFinExperiencia.Minimum;
+
+            // Limpiar los campos en Habilidades
+            txtHabilidad.Clear();
+
+            // Limpiar los campos en Competencias
+            txtCompetencia.Clear();
+            cmbDominio.SelectedIndex = -1; // Desselecciona el ComboBox de Dominio
+
+            // Limpiar los campos en Referencias
+            cmbTipoReferencia.SelectedIndex = -1; // Desselecciona el ComboBox de TipoReferencia
+            txtNombreReferencia.Clear();
+            txtTelefonoReferencia.Clear();
+
+            // Deseleccionar todas las filas en todos los DataGridView
+            dgvColaboradores.ClearSelection();
+            dgvFormacionAcademica.ClearSelection();
+            dgvExperienciaProfesional.ClearSelection();
+            dgvHabilidades.ClearSelection();
+            dgvCompetencias.ClearSelection();
+            dgvReferencias.ClearSelection();
+
+            // Refrescar los DataGridView para garantizar que reflejan el estado inicial
+            dgvCompetencias.DataSource = null;
+            dgvReferencias.DataSource = null;
+        }
+
+
+
         // Método para cargar experiencia profesional
         private void CargarExperiencias()
         {

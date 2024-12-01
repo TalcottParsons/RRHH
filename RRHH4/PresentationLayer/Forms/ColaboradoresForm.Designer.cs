@@ -17,6 +17,7 @@ namespace RRHH
 
         private void InitializeComponent()
         {
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnBuscarColaborador = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabDatosBasicos = new System.Windows.Forms.TabPage();
@@ -91,13 +92,6 @@ namespace RRHH
             this.btnEliminarReferencia = new System.Windows.Forms.Button();
             this.dgvReferencias = new System.Windows.Forms.DataGridView();
             this.btnRegresar = new System.Windows.Forms.Button();
-            this.dgvColaboradores.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvColaboradores_CellClick);
-            this.dgvFormacionAcademica.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFormacionAcademica_CellClick);
-            this.dgvExperienciaProfesional.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExperienciaProfesional_CellClick);
-            this.dgvHabilidades.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHabilidades_CellClick);
-            this.dgvCompetencias.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCompetencias_CellClick);
-            this.dgvReferencias.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvReferencias_CellClick);
-            this.dgvColaboradores.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvColaboradores_CellClick);
             this.tabControl.SuspendLayout();
             this.tabDatosBasicos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFoto)).BeginInit();
@@ -117,6 +111,16 @@ namespace RRHH
             this.tabReferencias.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReferencias)).BeginInit();
             this.SuspendLayout();
+            // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.Location = new System.Drawing.Point(400, 190);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(100, 30);
+            this.btnLimpiar.TabIndex = 3;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // btnBuscarColaborador
             // 
@@ -144,6 +148,7 @@ namespace RRHH
             // 
             // tabDatosBasicos
             // 
+            this.tabDatosBasicos.Controls.Add(this.btnLimpiar);
             this.tabDatosBasicos.Controls.Add(this.btnBuscarColaborador);
             this.tabDatosBasicos.Controls.Add(this.lblNombreCompleto);
             this.tabDatosBasicos.Controls.Add(this.txtNombreCompleto);
@@ -307,6 +312,7 @@ namespace RRHH
             this.dgvColaboradores.RowHeadersWidth = 51;
             this.dgvColaboradores.Size = new System.Drawing.Size(650, 200);
             this.dgvColaboradores.TabIndex = 11;
+            this.dgvColaboradores.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvColaboradores_CellClick);
             // 
             // tabFormacionAcademica
             // 
@@ -455,6 +461,7 @@ namespace RRHH
             this.dgvFormacionAcademica.RowHeadersWidth = 51;
             this.dgvFormacionAcademica.Size = new System.Drawing.Size(650, 200);
             this.dgvFormacionAcademica.TabIndex = 11;
+            this.dgvFormacionAcademica.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFormacionAcademica_CellClick);
             // 
             // tabExperienciaProfesional
             // 
@@ -603,6 +610,7 @@ namespace RRHH
             this.dgvExperienciaProfesional.RowHeadersWidth = 51;
             this.dgvExperienciaProfesional.Size = new System.Drawing.Size(650, 200);
             this.dgvExperienciaProfesional.TabIndex = 11;
+            this.dgvExperienciaProfesional.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExperienciaProfesional_CellClick);
             // 
             // tabHabilidades
             // 
@@ -670,6 +678,7 @@ namespace RRHH
             this.dgvHabilidades.RowHeadersWidth = 51;
             this.dgvHabilidades.Size = new System.Drawing.Size(700, 350);
             this.dgvHabilidades.TabIndex = 5;
+            this.dgvHabilidades.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHabilidades_CellClick);
             // 
             // tabCompetencias
             // 
@@ -760,6 +769,7 @@ namespace RRHH
             this.dgvCompetencias.RowHeadersWidth = 51;
             this.dgvCompetencias.Size = new System.Drawing.Size(700, 350);
             this.dgvCompetencias.TabIndex = 7;
+            this.dgvCompetencias.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCompetencias_CellClick);
             // 
             // tabReferencias
             // 
@@ -864,6 +874,7 @@ namespace RRHH
             this.dgvReferencias.RowHeadersWidth = 51;
             this.dgvReferencias.Size = new System.Drawing.Size(650, 200);
             this.dgvReferencias.TabIndex = 9;
+            this.dgvReferencias.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvReferencias_CellClick);
             // 
             // btnRegresar
             // 
@@ -983,7 +994,7 @@ namespace RRHH
         private System.Windows.Forms.Button btnActualizarReferencia;
         private System.Windows.Forms.Button btnEliminarReferencia;
         private System.Windows.Forms.DataGridView dgvReferencias;
-
+        private System.Windows.Forms.Button btnLimpiar;
 
 
     }
