@@ -44,6 +44,52 @@ namespace RRHH
             }
         }
 
+        private void btnBuscarColaborador_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Obtener los valores ingresados en los campos
+                string nombre = txtNombreCompleto.Text.Trim().ToLower();
+                string telefono = txtTelefono.Text.Trim().ToLower();
+                string email = txtEmail.Text.Trim().ToLower();
+                string departamento = txtDepartamento.Text.Trim().ToLower();
+                string objetivo = txtObjetivo.Text.Trim().ToLower();
+
+                // Crear una lista de filas que coincidan con los criterios
+                List<DataGridViewRow> resultados = dgvColaboradores.Rows.Cast<DataGridViewRow>()
+                    .Where(fila =>
+                        (string.IsNullOrEmpty(nombre) || fila.Cells["NombreCompleto"].Value.ToString().ToLower().Contains(nombre)) &&
+                        (string.IsNullOrEmpty(telefono) || fila.Cells["Telefono"].Value.ToString().ToLower().Contains(telefono)) &&
+                        (string.IsNullOrEmpty(email) || fila.Cells["Email"].Value.ToString().ToLower().Contains(email)) &&
+                        (string.IsNullOrEmpty(departamento) || fila.Cells["Departamento"].Value.ToString().ToLower().Contains(departamento)) &&
+                        (string.IsNullOrEmpty(objetivo) || fila.Cells["Objetivo"].Value.ToString().ToLower().Contains(objetivo))
+                    ).ToList();
+
+                // Verificar si hay resultados
+                if (resultados.Count > 0)
+                {
+                    // Limpia la selección actual
+                    dgvColaboradores.ClearSelection();
+
+                    // Resaltar las filas encontradas
+                    foreach (var fila in resultados)
+                    {
+                        fila.Selected = true;
+                        dgvColaboradores.FirstDisplayedScrollingRowIndex = fila.Index;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No se encontraron colaboradores que coincidan con los criterios de búsqueda.",
+                                    "Sin resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error durante la búsqueda: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         // Botón Agregar
         private void btnAgregar_Click(object sender, EventArgs e)

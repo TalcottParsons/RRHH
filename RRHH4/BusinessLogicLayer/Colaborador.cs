@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
+using System.Windows.Forms;
 
 namespace RRHH
 {
@@ -39,8 +40,6 @@ namespace RRHH
             }
         }
 
-
-
         // Método para actualizar un colaborador
         public void ActualizarColaborador()
         {
@@ -60,8 +59,6 @@ namespace RRHH
                 comando.ExecuteNonQuery();
             }
         }
-
-
 
         // Método para eliminar un colaborador (marcar como inactivo)
         public void EliminarColaborador()
@@ -89,7 +86,6 @@ namespace RRHH
                 return count > 0; // Devuelve true si existe un colaborador con el mismo nombre o correo
             }
         }
-
 
 
     }

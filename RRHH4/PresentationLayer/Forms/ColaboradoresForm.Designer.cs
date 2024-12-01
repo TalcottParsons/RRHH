@@ -17,6 +17,7 @@ namespace RRHH
 
         private void InitializeComponent()
         {
+            this.btnBuscarColaborador = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabDatosBasicos = new System.Windows.Forms.TabPage();
             this.lblNombreCompleto = new System.Windows.Forms.Label();
@@ -110,6 +111,16 @@ namespace RRHH
             ((System.ComponentModel.ISupportInitialize)(this.dgvReferencias)).BeginInit();
             this.SuspendLayout();
             // 
+            // btnBuscarColaborador
+            // 
+            this.btnBuscarColaborador.Location = new System.Drawing.Point(400, 143);
+            this.btnBuscarColaborador.Name = "btnBuscarColaborador";
+            this.btnBuscarColaborador.Size = new System.Drawing.Size(100, 31);
+            this.btnBuscarColaborador.TabIndex = 1;
+            this.btnBuscarColaborador.Text = "Buscar";
+            this.btnBuscarColaborador.UseVisualStyleBackColor = true;
+            this.btnBuscarColaborador.Click += new System.EventHandler(this.btnBuscarColaborador_Click);
+            // 
             // tabControl
             // 
             this.tabControl.Controls.Add(this.tabDatosBasicos);
@@ -126,6 +137,7 @@ namespace RRHH
             // 
             // tabDatosBasicos
             // 
+            this.tabDatosBasicos.Controls.Add(this.btnBuscarColaborador);
             this.tabDatosBasicos.Controls.Add(this.lblNombreCompleto);
             this.tabDatosBasicos.Controls.Add(this.txtNombreCompleto);
             this.tabDatosBasicos.Controls.Add(this.lblTelefono);
@@ -149,7 +161,6 @@ namespace RRHH
             this.tabDatosBasicos.TabIndex = 0;
             this.tabDatosBasicos.Text = "Datos Básicos";
             this.tabDatosBasicos.UseVisualStyleBackColor = true;
-
             // 
             // lblNombreCompleto
             // 
@@ -889,13 +900,12 @@ namespace RRHH
             this.ResumeLayout(false);
 
         }
-
+        private System.Windows.Forms.Button btnBuscarColaborador;
         private System.Windows.Forms.Label lblObjetivo;
         private System.Windows.Forms.TextBox txtObjetivo;
         private System.Windows.Forms.Label lblFoto;
         private System.Windows.Forms.PictureBox pictureBoxFoto;
         private System.Windows.Forms.Button btnSeleccionarFoto;
-
         private System.Windows.Forms.Label lblNombreCompleto;
         private System.Windows.Forms.Label lblTelefono;
         private System.Windows.Forms.Label lblEmail;
