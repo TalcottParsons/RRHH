@@ -8,7 +8,7 @@ namespace RRHH
 {
     internal static class Program
     {
-        /// <summary> //pruebon
+        /// <summary> 
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
