@@ -58,43 +58,54 @@ namespace RRHH
 
             using (SqlConnection conn = new ConexionBD().AbrirConexion())
             {
+                // Consulta SQL mejorada para evitar duplicados
                 string query = @"
-                SELECT c.ColaboradorID AS ID, 
-                       c.NombreCompleto AS Nombre, 
-                       c.Departamento, 
-                       c.Email, 
-                       c.Telefono, 
-                       c.FechaIngreso, 
-                       c.EstadoActivo, 
-                       c.Foto
-                FROM Colaboradores c";
+        SELECT c.ColaboradorID AS ID, 
+               c.NombreCompleto AS Nombre, 
+               c.Departamento, 
+               c.Email, 
+               c.Telefono, 
+               c.FechaIngreso, 
+               c.EstadoActivo, 
+               c.Foto,
+               (
+                   SELECT STRING_AGG(fa.Institucion + ' - ' + fa.Titulo, '; ')
+                   FROM FormacionAcademica fa
+                   WHERE fa.ColaboradorID = c.ColaboradorID
+               ) AS FormacionAcademica,
+               (
+                   SELECT STRING_AGG(ep.Empresa + ' - ' + ep.Puesto, '; ')
+                   FROM ExperienciaProfesional ep
+                   WHERE ep.ColaboradorID = c.ColaboradorID
+               ) AS ExperienciaProfesional,
+               (
+                   SELECT STRING_AGG(h.Habilidad, ', ')
+                   FROM Habilidades h
+                   WHERE h.ColaboradorID = c.ColaboradorID
+               ) AS Habilidades,
+               (
+                   SELECT STRING_AGG(comp.Competencia, ', ')
+                   FROM Competencias comp
+                   WHERE comp.ColaboradorID = c.ColaboradorID
+               ) AS Competencias,
+               (
+                   SELECT STRING_AGG(ref.Nombre + ' (' + ref.TipoReferencia + ')', ', ')
+                   FROM Referencias ref
+                   WHERE ref.ColaboradorID = c.ColaboradorID
+               ) AS Referencias
+        FROM Colaboradores c
+        WHERE c." + criterio + @" LIKE @Valor";
 
-                // Agregar joins según el criterio seleccionado
-                if (criterio == "Habilidad")
-                {
-                    query += @"
-                    INNER JOIN Habilidades h ON c.ColaboradorID = h.ColaboradorID
-                    WHERE h.Habilidad LIKE @Valor";
-                }
-                else if (criterio == "Competencia")
-                {
-                    query += @"
-                    INNER JOIN Competencias comp ON c.ColaboradorID = comp.ColaboradorID
-                    WHERE comp.Competencia LIKE @Valor";
-                }
-                else
-                {
-                    query += @"
-                    WHERE c." + criterio + " LIKE @Valor";
-                }
-
+                // Configuración del comando SQL
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Valor", "%" + valor + "%");
 
+                // Llenar el DataTable con los resultados
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
+                // Asignar datos al DataGridView
                 dgvResultados.DataSource = dt;
 
                 // Ocultar la columna Foto en el DataGridView si existe
@@ -102,8 +113,26 @@ namespace RRHH
                 {
                     dgvResultados.Columns["Foto"].Visible = false;
                 }
+
+                // Configurar encabezados de columnas
+                if (dgvResultados.Columns.Contains("FormacionAcademica"))
+                    dgvResultados.Columns["FormacionAcademica"].HeaderText = "Formación Académica";
+
+                if (dgvResultados.Columns.Contains("ExperienciaProfesional"))
+                    dgvResultados.Columns["ExperienciaProfesional"].HeaderText = "Experiencia Profesional";
+
+                if (dgvResultados.Columns.Contains("Habilidades"))
+                    dgvResultados.Columns["Habilidades"].HeaderText = "Habilidades";
+
+                if (dgvResultados.Columns.Contains("Competencias"))
+                    dgvResultados.Columns["Competencias"].HeaderText = "Competencias";
+
+                if (dgvResultados.Columns.Contains("Referencias"))
+                    dgvResultados.Columns["Referencias"].HeaderText = "Referencias";
             }
         }
+
+
 
         private void dgvResultados_SelectionChanged(object sender, EventArgs e)
         {
@@ -141,7 +170,14 @@ namespace RRHH
                     bool estadoActivo = filaSeleccionada.Cells["EstadoActivo"].Value != DBNull.Value &&
                                         Convert.ToBoolean(filaSeleccionada.Cells["EstadoActivo"].Value);
 
-                    // Cambiar la ruta para que se guarde en Documentos
+                    // Nuevos campos
+                    string formacionAcademica = filaSeleccionada.Cells["FormacionAcademica"].Value?.ToString() ?? "No especificada";
+                    string experienciaProfesional = filaSeleccionada.Cells["ExperienciaProfesional"].Value?.ToString() ?? "No especificada";
+                    string habilidades = filaSeleccionada.Cells["Habilidades"].Value?.ToString() ?? "No especificadas";
+                    string competencias = filaSeleccionada.Cells["Competencias"].Value?.ToString() ?? "No especificadas";
+                    string referencias = filaSeleccionada.Cells["Referencias"].Value?.ToString() ?? "No especificadas";
+
+                    // Ruta del archivo PDF
                     string carpetaDocumentos = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                     string archivoPDF = Path.Combine(carpetaDocumentos, $"{nombre.Replace(" ", "_")}_Registro.pdf");
 
@@ -156,11 +192,9 @@ namespace RRHH
                             var normalFont = PdfFontFactory.CreateFont(iText.IO.Font.Constants.StandardFonts.HELVETICA);
 
                             // Título en negrita
-                            document.Add(new Paragraph("Registro de Colaborador")
-                                .SetFont(boldFont)
-                                .SetFontSize(16));
+                            document.Add(new Paragraph("Registro de Colaborador").SetFont(boldFont).SetFontSize(16));
 
-                            // Detalles
+                            // Detalles principales
                             document.Add(new Paragraph($"Nombre: {nombre}").SetFont(normalFont));
                             document.Add(new Paragraph($"Departamento: {departamento}").SetFont(normalFont));
                             document.Add(new Paragraph($"Email: {email}").SetFont(normalFont));
@@ -168,7 +202,23 @@ namespace RRHH
                             document.Add(new Paragraph($"Fecha de Ingreso: {fechaIngreso}").SetFont(normalFont));
                             document.Add(new Paragraph($"Estado Activo: {(estadoActivo ? "Sí" : "No")}").SetFont(normalFont));
 
-                            // Imagen
+                            // Nuevas secciones
+                            document.Add(new Paragraph("Formación Académica:").SetFont(boldFont).SetFontSize(12));
+                            document.Add(new Paragraph(formacionAcademica).SetFont(normalFont));
+
+                            document.Add(new Paragraph("Experiencia Profesional:").SetFont(boldFont).SetFontSize(12));
+                            document.Add(new Paragraph(experienciaProfesional).SetFont(normalFont));
+
+                            document.Add(new Paragraph("Habilidades:").SetFont(boldFont).SetFontSize(12));
+                            document.Add(new Paragraph(habilidades).SetFont(normalFont));
+
+                            document.Add(new Paragraph("Competencias:").SetFont(boldFont).SetFontSize(12));
+                            document.Add(new Paragraph(competencias).SetFont(normalFont));
+
+                            document.Add(new Paragraph("Referencias:").SetFont(boldFont).SetFontSize(12));
+                            document.Add(new Paragraph(referencias).SetFont(normalFont));
+
+                            // Imagen (si aplica)
                             if (filaSeleccionada.Cells["Foto"].Value != DBNull.Value)
                             {
                                 byte[] fotoBytes = (byte[])filaSeleccionada.Cells["Foto"].Value;
@@ -196,6 +246,7 @@ namespace RRHH
                 MessageBox.Show("Seleccione un registro para imprimir.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
 
 
     }
