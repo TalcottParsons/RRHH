@@ -10,6 +10,8 @@
         private System.Windows.Forms.DataGridView dgvResultados;
         private System.Windows.Forms.Button btnCerrar;
         private System.Windows.Forms.PictureBox pbFoto; // Agregado para mostrar la foto
+        private System.Windows.Forms.Button btnImprimir; // Botón para imprimir el registro
+
 
         protected override void Dispose(bool disposing)
         {
@@ -29,6 +31,7 @@
             this.dgvResultados = new System.Windows.Forms.DataGridView();
             this.btnCerrar = new System.Windows.Forms.Button();
             this.pbFoto = new System.Windows.Forms.PictureBox();
+            this.btnImprimir = new System.Windows.Forms.Button(); // Declaración del botón Imprimir
             ((System.ComponentModel.ISupportInitialize)(this.dgvResultados)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFoto)).BeginInit();
             this.SuspendLayout();
@@ -106,6 +109,17 @@
             this.pbFoto.TabIndex = 6;
             this.pbFoto.TabStop = false;
             // 
+            // btnImprimir
+            // 
+            this.btnImprimir.Location = new System.Drawing.Point(700, 320); // Ubicación del botón Imprimir
+            this.btnImprimir.Name = "btnImprimir";
+            this.btnImprimir.Size = new System.Drawing.Size(80, 30); // Tamaño del botón Imprimir
+            this.btnImprimir.TabIndex = 7;
+            this.btnImprimir.Text = "Imprimir";
+            this.btnImprimir.UseVisualStyleBackColor = true;
+            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click); // Vincula el evento
+            this.Controls.Add(this.btnImprimir); // Agrega el botón al formulario
+            // 
             // BusquedaForm
             // 
             this.ClientSize = new System.Drawing.Size(800, 460);
@@ -122,8 +136,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbFoto)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
     }
 }
+
 

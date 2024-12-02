@@ -4,6 +4,12 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using iText.IO.Image;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Kernel.Font;
+
 
 namespace RRHH
 {
@@ -53,33 +59,33 @@ namespace RRHH
             using (SqlConnection conn = new ConexionBD().AbrirConexion())
             {
                 string query = @"
-            SELECT c.ColaboradorID AS ID, 
-                   c.NombreCompleto AS Nombre, 
-                   c.Departamento, 
-                   c.Email, 
-                   c.Telefono, 
-                   c.FechaIngreso, 
-                   c.EstadoActivo, 
-                   c.Foto
-            FROM Colaboradores c";
+                SELECT c.ColaboradorID AS ID, 
+                       c.NombreCompleto AS Nombre, 
+                       c.Departamento, 
+                       c.Email, 
+                       c.Telefono, 
+                       c.FechaIngreso, 
+                       c.EstadoActivo, 
+                       c.Foto
+                FROM Colaboradores c";
 
                 // Agregar joins según el criterio seleccionado
                 if (criterio == "Habilidad")
                 {
                     query += @"
-                INNER JOIN Habilidades h ON c.ColaboradorID = h.ColaboradorID
-                WHERE h.Habilidad LIKE @Valor";
+                    INNER JOIN Habilidades h ON c.ColaboradorID = h.ColaboradorID
+                    WHERE h.Habilidad LIKE @Valor";
                 }
                 else if (criterio == "Competencia")
                 {
                     query += @"
-                INNER JOIN Competencias comp ON c.ColaboradorID = comp.ColaboradorID
-                WHERE comp.Competencia LIKE @Valor";
+                    INNER JOIN Competencias comp ON c.ColaboradorID = comp.ColaboradorID
+                    WHERE comp.Competencia LIKE @Valor";
                 }
                 else
                 {
                     query += @"
-                WHERE c." + criterio + " LIKE @Valor";
+                    WHERE c." + criterio + " LIKE @Valor";
                 }
 
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -99,7 +105,6 @@ namespace RRHH
             }
         }
 
-
         private void dgvResultados_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvResultados.SelectedRows.Count > 0)
@@ -111,7 +116,7 @@ namespace RRHH
                     byte[] fotoBytes = (byte[])filaSeleccionada.Cells["Foto"].Value;
                     using (MemoryStream ms = new MemoryStream(fotoBytes))
                     {
-                        pbFoto.Image = Image.FromStream(ms); // Cargar la imagen en el PictureBox
+                        pbFoto.Image = System.Drawing.Image.FromStream(ms); // Cargar la imagen en el PictureBox
                     }
                 }
                 else
@@ -120,5 +125,78 @@ namespace RRHH
                 }
             }
         }
+
+        private void btnImprimir_Click(object sender, EventArgs e)
+        {
+            if (dgvResultados.SelectedRows.Count > 0)
+            {
+                try
+                {
+                    DataGridViewRow filaSeleccionada = dgvResultados.SelectedRows[0];
+                    string nombre = filaSeleccionada.Cells["Nombre"].Value?.ToString() ?? "Sin nombre";
+                    string departamento = filaSeleccionada.Cells["Departamento"].Value?.ToString() ?? "Sin departamento";
+                    string email = filaSeleccionada.Cells["Email"].Value?.ToString() ?? "Sin email";
+                    string telefono = filaSeleccionada.Cells["Telefono"].Value?.ToString() ?? "Sin teléfono";
+                    string fechaIngreso = filaSeleccionada.Cells["FechaIngreso"].Value?.ToString() ?? "Sin fecha";
+                    bool estadoActivo = filaSeleccionada.Cells["EstadoActivo"].Value != DBNull.Value &&
+                                        Convert.ToBoolean(filaSeleccionada.Cells["EstadoActivo"].Value);
+
+                    // Cambiar la ruta para que se guarde en Documentos
+                    string carpetaDocumentos = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    string archivoPDF = Path.Combine(carpetaDocumentos, $"{nombre.Replace(" ", "_")}_Registro.pdf");
+
+                    using (var writer = new PdfWriter(archivoPDF))
+                    {
+                        using (var pdf = new PdfDocument(writer))
+                        {
+                            var document = new Document(pdf);
+
+                            // Crear fuentes
+                            var boldFont = PdfFontFactory.CreateFont(iText.IO.Font.Constants.StandardFonts.TIMES_BOLD);
+                            var normalFont = PdfFontFactory.CreateFont(iText.IO.Font.Constants.StandardFonts.HELVETICA);
+
+                            // Título en negrita
+                            document.Add(new Paragraph("Registro de Colaborador")
+                                .SetFont(boldFont)
+                                .SetFontSize(16));
+
+                            // Detalles
+                            document.Add(new Paragraph($"Nombre: {nombre}").SetFont(normalFont));
+                            document.Add(new Paragraph($"Departamento: {departamento}").SetFont(normalFont));
+                            document.Add(new Paragraph($"Email: {email}").SetFont(normalFont));
+                            document.Add(new Paragraph($"Teléfono: {telefono}").SetFont(normalFont));
+                            document.Add(new Paragraph($"Fecha de Ingreso: {fechaIngreso}").SetFont(normalFont));
+                            document.Add(new Paragraph($"Estado Activo: {(estadoActivo ? "Sí" : "No")}").SetFont(normalFont));
+
+                            // Imagen
+                            if (filaSeleccionada.Cells["Foto"].Value != DBNull.Value)
+                            {
+                                byte[] fotoBytes = (byte[])filaSeleccionada.Cells["Foto"].Value;
+                                using (MemoryStream ms = new MemoryStream(fotoBytes))
+                                {
+                                    var imageData = ImageDataFactory.Create(ms.ToArray());
+                                    var image = new iText.Layout.Element.Image(imageData);
+                                    document.Add(image);
+                                }
+                            }
+
+                            document.Close();
+                        }
+                    }
+
+                    MessageBox.Show($"El archivo PDF se ha guardado en la carpeta Documentos como: {archivoPDF}.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al generar el PDF: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione un registro para imprimir.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+
     }
 }
