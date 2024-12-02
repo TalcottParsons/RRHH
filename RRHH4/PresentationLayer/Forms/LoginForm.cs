@@ -17,6 +17,13 @@ namespace RRHH
             InitializeComponent();
         }
 
+        public static class UsuarioSesion
+        {
+            public static int UsuarioID { get; set; }
+            public static string NombreUsuario { get; set; }
+        }
+
+
         private void btnIniciarSesion_Click(object sender, EventArgs e)
         {
             string nombreUsuario = txtUsuario.Text.Trim();
@@ -29,6 +36,10 @@ namespace RRHH
                 // Obtener el rol y el ID del usuario
                 string rol = usuario.ObtenerRol(nombreUsuario);
                 int usuarioID = usuario.ObtenerUsuarioID(nombreUsuario);
+
+                // Guardar el ID del usuario en la sesión global
+                UsuarioSesion.UsuarioID = usuarioID;
+                UsuarioSesion.NombreUsuario = nombreUsuario;
 
                 // Registrar actividad
                 ConexionBD conexion = new ConexionBD();
@@ -46,6 +57,7 @@ namespace RRHH
                 MessageBox.Show("Usuario o contraseña incorrectos.", "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void btnSalir_Click(object sender, EventArgs e)
         {

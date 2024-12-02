@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.IO;
+using static RRHH.LoginForm;
 
 
 
@@ -234,7 +235,6 @@ namespace RRHH
         }
 
 
-        // Botón Agregar
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             try
@@ -277,6 +277,13 @@ namespace RRHH
 
                 // Agregar el colaborador
                 colaborador.AgregarColaborador();
+
+                // Registrar la actividad en el historial
+                ConexionBD conexion = new ConexionBD();
+                string accion = $"Colaborador agregado: {colaborador.NombreCompleto}";
+                conexion.RegistrarActividad(UsuarioSesion.UsuarioID, accion);
+
+                // Notificar al usuario
                 MessageBox.Show("Colaborador agregado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Recargar la lista de colaboradores
@@ -290,6 +297,7 @@ namespace RRHH
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         // Método para limpiar los campos del formulario
         private void LimpiarCampos()
@@ -320,6 +328,7 @@ namespace RRHH
             {
                 try
                 {
+                    // Crear el objeto colaborador con los datos actualizados
                     Colaborador colaborador = new Colaborador
                     {
                         ColaboradorID = Convert.ToInt32(dgvColaboradores.SelectedRows[0].Cells["ColaboradorID"].Value),
@@ -330,7 +339,7 @@ namespace RRHH
                         Objetivo = txtObjetivo.Text.Trim(),
                     };
 
-                    // Convierte la imagen en el PictureBox a un arreglo de bytes
+                    // Convertir la imagen en el PictureBox a un arreglo de bytes
                     if (pictureBoxFoto.Image != null)
                     {
                         using (MemoryStream ms = new MemoryStream())
@@ -340,50 +349,79 @@ namespace RRHH
                         }
                     }
 
+                    // Actualizar el colaborador
                     colaborador.ActualizarColaborador();
-                    MessageBox.Show("Colaborador actualizado exitosamente.");
+
+                    // Registrar la actividad en el historial
+                    ConexionBD conexion = new ConexionBD();
+                    string accion = $"Colaborador actualizado: {colaborador.NombreCompleto} (ID: {colaborador.ColaboradorID})";
+                    conexion.RegistrarActividad(UsuarioSesion.UsuarioID, accion);
+
+                    // Notificar al usuario
+                    MessageBox.Show("Colaborador actualizado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Recargar la lista de colaboradores
                     CargarColaboradores();
+
+                    // Limpiar los campos del formulario
                     LimpiarCampos();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Seleccione un colaborador para actualizar.");
+                MessageBox.Show("Seleccione un colaborador para actualizar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
 
 
-        // Botón Eliminar
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             if (dgvColaboradores.SelectedRows.Count > 0)
             {
                 try
                 {
-                    Colaborador colaborador = new Colaborador
+                    // Confirmar la eliminación
+                    DialogResult resultado = MessageBox.Show("¿Está seguro de que desea eliminar este colaborador?",
+                                                             "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (resultado == DialogResult.Yes)
                     {
-                        ColaboradorID = Convert.ToInt32(dgvColaboradores.SelectedRows[0].Cells["ColaboradorID"].Value)
-                    };
+                        // Crear el objeto colaborador para eliminar
+                        Colaborador colaborador = new Colaborador
+                        {
+                            ColaboradorID = Convert.ToInt32(dgvColaboradores.SelectedRows[0].Cells["ColaboradorID"].Value)
+                        };
 
-                    colaborador.EliminarColaborador();
-                    MessageBox.Show("Colaborador marcado como inactivo.");
-                    CargarColaboradores();
+                        // Eliminar el colaborador
+                        colaborador.EliminarColaborador();
+
+                        // Registrar la actividad en el historial
+                        ConexionBD conexion = new ConexionBD();
+                        string accion = $"Colaborador eliminado: ID {colaborador.ColaboradorID}";
+                        conexion.RegistrarActividad(UsuarioSesion.UsuarioID, accion);
+
+                        // Notificar al usuario
+                        MessageBox.Show("Colaborador marcado como inactivo.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // Recargar la lista de colaboradores
+                        CargarColaboradores();
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Seleccione un colaborador para eliminar.");
+                MessageBox.Show("Seleccione un colaborador para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
 
 
         private void btnSeleccionarFoto_Click(object sender, EventArgs e)
